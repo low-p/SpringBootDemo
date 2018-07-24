@@ -19,7 +19,7 @@ $ git config user.name [name]
 //查看所有分支    
 $ git branch -a/-r   
 //切换本地分支   
-$ git checkout [BranchName]    
+$ git checkout [BranchName]      
 //创建本地分支    
 $ git branch [BranchName]   
 //从远程仓库拉取特定分支(带有--track参数，所以要求git1.6.4以上)   
@@ -29,6 +29,8 @@ $ git branch checkout -b [LocalBranchName] origin/[remoteBranchName]
 $ git fetch origin [remoteBranchName]:[LocalBranchName]    
 //提交本地分支数据到远程仓库   
 $ git push origin [LocalBranchName]:[remoteBranchName]   
+//合并某分支到当前分支    
+$ git merge [BranchName]   
 //设置git-push、pull的默认分支   
 $ git branch --set-upstream-to=origin/[BranchName]   
 $ git branch --unset-upstream master   
