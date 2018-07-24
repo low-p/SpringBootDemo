@@ -22,6 +22,7 @@ $ git branch -a/-r
 $ git fetch [remote]   
 //拉取远程仓库分支的代码并合并到本地分支   
 $ git pull [remote] [branch]    
+$ git pull [remote] [RemoteBranchName]:[LocalBranchName]    
 //切换本地分支     
 $ git checkout [BranchName]      
 //创建本地分支    
@@ -29,10 +30,10 @@ $ git branch [BranchName]
 //从远程仓库拉取特定分支(带有--track参数，所以要求git1.6.4以上)   
 $ git checkout --track origin/[BranchName]   
 //拉取远程分支并创建本地分支   
-$ git branch checkout -b [LocalBranchName] origin/[remoteBranchName]   
-$ git fetch origin [remoteBranchName]:[LocalBranchName]    
+$ git branch checkout -b [LocalBranchName] origin/[RemoteBranchName]   
+$ git fetch origin [RemoteBranchName]:[LocalBranchName]    
 //提交本地分支数据到远程仓库   
-$ git push origin [LocalBranchName]:[remoteBranchName]  
+$ git push origin [LocalBranchName]:[RemoteBranchName]  
 //同上为强制推送    
 $ git push -f origin guide:gitGuide   
 //合并某分支到当前分支    
