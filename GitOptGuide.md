@@ -2,7 +2,8 @@
 1、执行以下命令，创建SSH KEY, 在C盘用户目录下的.ssh目录，生成id_rsa和id_rsa.pub这两个文件([email]--邮箱,一般为Github注册邮箱)      
 $ ssh-keygen -t rsa -C [email]     
 2、登录Github, 进入Settings，找到SSH and GPG keys, 然后New SSH key，Title任意命名，   
-   把步骤4中id_rsa.pub文件中的代码复制到Key下的文本框中，最后Add SSH key完成。   
+   把步骤4中id_rsa.pub文件中的代码复制到Key下的文本框中，最后Add SSH key完成。
+      
 #设置用户名以及用户邮箱   
 $ git config --global user.email "you@example.com"   
 $ git config --global user.name "Your Name"     
@@ -19,8 +20,7 @@ $ git remote add origin [remote]
 5、本地仓库提交到远程仓库(第一次提交时: $ git push -u origin master)         
 $ git push origin master   
 6、步骤4、5可能会弹出Github的登陆窗口，账号密码登陆即可。      
-   
-    
+       
 #更新代码提交到Github步骤       
 1、查看有变更的文件       
 $ git status    
