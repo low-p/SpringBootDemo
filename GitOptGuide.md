@@ -32,7 +32,9 @@ $ git checkout --track origin/[BranchName]
 $ git branch checkout -b [LocalBranchName] origin/[remoteBranchName]   
 $ git fetch origin [remoteBranchName]:[LocalBranchName]    
 //提交本地分支数据到远程仓库   
-$ git push origin [LocalBranchName]:[remoteBranchName]   
+$ git push origin [LocalBranchName]:[remoteBranchName]  
+//同上为强制推送    
+$ git push -f origin guide:gitGuide   
 //合并某分支到当前分支    
 $ git merge [BranchName]   
 //设置git-push、pull的默认分支   
