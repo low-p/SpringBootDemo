@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <script src="/demo/webjars/jquery/jquery.min.js"></script>
+    <script src="/demo/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/demo/js/bootstrap-table.js"></script>
+    <script src="/demo/js/bootstrap-table-zh-CN.js"></script>
+    <script src="/demo/js/messenger.js"></script>
+    <script src="/demo/js/messenger-theme-future.js"></script>
+    <link rel="stylesheet" href="/demo/webjars/bootstrap/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/demo/css/bootstrap-table.css" type="text/css" />
+    <link rel="stylesheet" href="/demo/css/messenger.css" type="text/css" />
+    <link rel="stylesheet" href="/demo/css/messenger-theme-future.css" type="text/css" />
+    <meta charset="UTF-8">
+    <title>学生信息</title>
+</head>
+<body>
+    <div class="container-fluid" style="margin: 20px 60px;width: 1000px;">
+        <h4>学生信息列表</h4>
+        <form class="form-inline" >
+            <!-- 工具栏 -->
+            <div id="toolbar">
+                <!--data-toggle="modal" -->
+                <input type="button" value="新增" id="addBtn" data-toggle="modal" data-target="#addStudentModal" class="btn btn-primary"/>
+                <input type="button" value="修改" id="editBtn" data-target="#editStudentModal" class="btn btn-primary" onclick="editStudent()"/>
+                <input type="button" value="删除" id="deleteBtn" class="btn btn-primary" onclick="deleteStudent()"/>
+            </div>
+            <!-- bootstrapTable -->
+        </form>
+        <table id="studentList"></table>
+    </div>
+    <!-- 新增学生信息的模态框 -->
+    <div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="addStudentLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="addStudentLabel">新增学生</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="addStudentForm" method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputSName" class="col-sm-2 control-label">姓名</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="sName" class="form-control" id="inputSName" placeholder="姓名"/>
+                            </div>
+                            <label id="errorSName" for="inputSName" class="col-sm-3 control-label"></label>
+                        </div>
+                        <div class="form-group" >
+                            <label for="inputSClass" class="col-sm-2 control-label">班级</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="sClass" class="form-control" id="inputSClass" placeholder="班级"/>
+                            </div>
+                            <label id="errorSClass" for="inputSClass" class="col-sm-3 control-label"></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputSex" class="col-sm-2 control-label">性别</label>
+                            <div class="col-sm-7">
+                                <input type="sex" name="sex" class="col-sm-4 form-control" id="inputSex" placeholder="性别"/>
+                            </div>
+                            <label id="errorSex" for="inputSex" class="col-sm-3 control-label"></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAge" class="col-sm-2 control-label">年龄</label>
+                            <div class="col-sm-7">
+                                <input type="number" name="age" class="col-sm-4 form-control" id="inputAge" placeholder="年龄"/>
+                            </div>
+                            <label id="errorAge" for="inputAge" class="col-sm-3 control-label"></label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="conf" class="btn btn-default" onclick="addStudent()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 修改学生信息的模态框 -->
+    <div class="modal fade" id="editStudentModal" tabindex="-1" role="dialog" aria-labelledby="editStudentLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="editStudentLavel">修改用户</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="editStudentForm" method="post" class="form-horizontal">
+                        <div class="form-group" style="display:none">
+                            <label for="editId" class="col-sm-2 control-label">ID</label>
+                            <div class="col-sm-7">
+                                <input type="id" name="sId"   class="form-control" id="editId" placeholder="ID" />
+                            </div>
+                            <label id="errorId" for="editId" class="col-sm-3 control-label"></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="editSName" class="col-sm-2 control-label">姓名</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="sName" class="form-control" id="editSName" placeholder="姓名"/>
+                            </div>
+                            <label id="errorEditSName" for="editSName" class="col-sm-3 control-label"></label>
+                        </div>
+                        <div class="form-group" >
+                            <label for="editSClass" class="col-sm-2 control-label">班级</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="sClass" class="form-control" id="editSClass" placeholder="班级"/>
+                            </div>
+                            <label id="errorEditSClass" for="editSClass" class="col-sm-3 control-label"></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="editSex" class="col-sm-2 control-label">性别</label>
+                            <div class="col-sm-7">
+                                <input type="sex" name="sex" class="col-sm-4 form-control" id="editSex" placeholder="性别"/>
+                            </div>
+                            <label id="errorEditSex" for="editSex" class="col-sm-3 control-label"></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="editAge" class="col-sm-2 control-label">年龄</label>
+                            <div class="col-sm-7">
+                                <input type="number" name="age" class="col-sm-4 form-control" id="editAge" placeholder="年龄"/>
+                            </div>
+                            <label id="errorEditAge" for="editAge" class="col-sm-3 control-label"></label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="editConf" class="btn btn-default" onclick="updateStudent()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    function initTable() {
+        //先销毁表格
+        $('#studentList').bootstrapTable('destroy');
+        //初始化表格,动态从服务器加载数据
+        $("#studentList").bootstrapTable({
+            method: "get",  //使用get请求到服务器获取数据
+            url: "/demo/student/list", //获取数据的Servlet地址
+            striped: true,  //表格显示条纹
+            pagination: true, //启动分页
+            pageSize: 5,  //每页显示的记录数
+            pageNumber:1, //当前第几页
+            pageList: [5, 10, 15, 20, 25],  //记录数可选列表
+            search: true,  //是否启用查询
+            searchOnEnterKey : true,
+            //showRefresh : true,//刷新
+            //showToggle : true,//默认为false隐藏视图切换按钮，设为true显示
+            //showColumns: false,// 默认为false隐藏某列下拉菜单，设为true显示
+            toolbar:"#toolbar",//工具栏
+            locale: "zh-CN",
+            uniqueId:"sId",//Indicate an unique identifier for each row
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType : "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var keyword = $(".form-control").val();
+                //console.log(keyword);
+                var param = {
+                    pageNum: params.pageNumber,
+                    pageSize: params.pageSize,
+                    keyword: keyword
+                };
+                return param;
+            },
+            columns : [{
+                checkbox:"true",
+                field : "box"
+            },  {
+                title : "ID",
+                field : "sId",
+                visible: false
+            }, {
+                title : "姓名",
+                field : "sName"
+            }, {
+                title : "班级",
+                field : "sClass"
+            }, {
+                title : "性别",
+                field : "sex"
+            }, {
+                title : "年龄",
+                field : "age"
+            }],
+            onLoadSuccess: function(){  //加载成功时执行
+                //console.log("加载成功");
+                $.globalMessenger().post({
+                    message: "加载成功",
+                    hideAfter: 2,
+                    type: 'success'
+                })
+            },
+            onLoadError: function(){  //加载失败时执行
+                //console.log("加载数据失败");
+                $.globalMessenger().post({
+                    message: "加载数据失败",
+                    hideAfter: 2,
+                    type: 'error'
+                })
+            }
+        })
+    }
+
+    $(document).ready(function () {
+        //调用函数，初始化表格
+        initTable();
+
+        //当点击查询按钮的时候执行
+        $("#search").bind("click", initTable);
+    })
+    $._messengerDefaults = {
+        extraClasses: 'messenger-fixed messenger-theme-future messenger-on-bottom'
+    }
+    //点击取消后清空表单中已写信息
+    function cancelModal(){
+        document.getElementById("addStudentForm").reset();
+    }
+    //新增用户
+    function addStudent(){
+        var param = $("#addStudentForm").serializeArray();
+        //debugger;
+        $("#conf").attr("onclick","addStudent()");
+        $.ajax({
+            url:"/demo/student/add",
+            method:"post",
+            data:param,
+            dataType:"json",
+            success:function(data){
+                //console.log("返回数据： " + data);
+                if(data.result=="success"){
+                    $("#addStudentModal").modal('hide');
+                    $("#studentList").bootstrapTable('refresh');
+                    cancelModal();
+                    $.globalMessenger().post({
+                        message: "新增成功",
+                        hideAfter: 2,
+                        type: 'success'
+                    })
+                } else {
+                    //console.log("新增失败： "+JSON.stringify(data));
+                    $.globalMessenger().post({
+                        message: "新增失败",
+                        hideAfter: 2,
+                        type: 'error'
+                    })
+                }
+            },
+            error:function(msg){
+                //console.log("新增错误："+ JSON.stringify(msg));
+                $.globalMessenger().post({
+                    message: "新增错误",
+                    hideAfter: 2,
+                    type: 'error'
+                })
+            }
+        })
+    }
+    //修改用户
+    function editStudent(){
+        document.getElementById("editStudentForm").reset();
+        //获取选中行的数据
+        var rows = $("#studentList").bootstrapTable('getSelections');
+        if(rows.length!=1){
+            $.globalMessenger().post({
+                message: "请选择一行数据",
+                hideAfter: 2,
+                type: 'error'
+            })
+        }
+        else{
+            $("#editStudentModal").modal("toggle");
+            //console.log("执行toggle.。。。。。。。。。。。。。。。。。。。");
+            $("#editStudentModal").modal("show");
+            //console.log("执行show。。。。。。。。。。。。。。。。。。。。。。");
+            var row = rows[0];
+            $('#editId').val(row.sId);
+            $('#editSName').val(row.sName);
+            $('#editSClass').val(row.sClass);
+            $('#editSex').val(row.sex);
+            $('#editAge').val(row.age);
+        }
+    }
+    function updateStudent(){
+        var param = $("#editStudentForm").serializeArray();
+        //设为disable则无法获取
+        $.ajax({
+            url:"/demo/student/edit",
+            method:"post",
+            data:param,
+            dataType:"json",
+            success:function(data){
+                if(data.result=="success"){
+                    $("#editStudentModal").modal("hide");
+                    $("#studentList").bootstrapTable('refresh');
+                    $.globalMessenger().post({
+                        message: "修改成功",
+                        hideAfter: 2,
+                        type: 'success'
+                    })
+                } else {
+                    //console.log("修改失败："+JSON.stringify(data));
+                    $.globalMessenger().post({
+                        message: "修改失败",
+                        hideAfter: 2,
+                        type: 'error'
+                    })
+                }
+            },
+            error:function(msg){
+                //console.log("修改错误："+ JSON.stringify(msg));
+                $.globalMessenger().post({
+                    message: "修改错误",
+                    hideAfter: 2,
+                    type: 'error'
+                })
+            }
+        })
+    }
+    function deleteStudent(){
+        var rows = $("#studentList").bootstrapTable("getSelections");
+        if (null == rows || rows.length == 0) {
+            $.globalMessenger().post({
+                message: "请选择删除行",
+                hideAfter: 2,
+                type: 'error'
+            })
+            return false;
+        }
+        var ids = [];
+        var len = rows.length;
+        //debugger;
+        for(var i=0;i<len;i++){
+            ids.push(rows[i].sId);
+        }
+        //debugger;
+        $.ajax({
+            url:"/demo/student/delete",
+            dataType:"json",
+            traditional: true,//属性在这里设置
+            method:"post",
+            data:{
+                "ids":ids
+            },
+            success:function(data){
+                if (data.result=="success") {
+                    $("#studentList").bootstrapTable("refresh");
+                    $.globalMessenger().post({
+                        message: "删除成功",
+                        hideAfter: 2,
+                        type: 'success'
+                    })
+                } else {
+                    //console.log("删除失败："+JSON.stringify(data));
+                    $.globalMessenger().post({
+                        message: "删除失败",
+                        hideAfter: 2,
+                        type: 'error'
+                    })
+                }
+            },
+            error:function(msg){
+                //console.log("删除错误："+ JSON.stringify(msg));
+                $.globalMessenger().post({
+                    message: "删除错误",
+                    hideAfter: 2,
+                    type: 'error'
+                })
+            }
+        })
+    }
+</script>
+</html>

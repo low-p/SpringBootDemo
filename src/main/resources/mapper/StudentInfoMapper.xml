@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyj.springboot.demo.dao.StudentInfoDao" >
+  <resultMap id="BaseResultMap" type="com.zyj.springboot.demo.entity.StudentInfo" >
+    <id column="s_id" property="sId" jdbcType="INTEGER" />
+    <result column="s_name" property="sName" jdbcType="VARCHAR" />
+    <result column="s_class" property="sClass" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    s_id, s_name, s_class, sex, age
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from student_info
+    where s_id = #{sId,jdbcType=INTEGER}
+  </select>
+  <select id="queryForList" resultType="com.zyj.springboot.demo.entity.StudentInfo" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
+    from student_info
+    <if test="null != keyword and '' != keyword">
+      where s_name like "%${keyword}%"
+    </if>
+
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from student_info
+    where s_id = #{sId,jdbcType=INTEGER}
+  </delete>
+  <delete id="batchDelStudent" parameterType="java.lang.String">
+    delete from student_info
+    where s_id in (${ids})
+  </delete>
+  <delete id="batchDeleteStudent" parameterType="java.util.List">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+      delete from student_info where s_id = #{item.id}
+    </foreach>
+  </delete>
+  <insert id="insertStudent" parameterType="com.zyj.springboot.demo.entity.StudentInfo" >
+    insert into student_info (s_id, s_name, s_class, 
+      sex, age)
+    values (#{sId,jdbcType=INTEGER}, #{sName,jdbcType=VARCHAR}, #{sClass,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER})
+  </insert>
+  <insert id="insert" parameterType="com.zyj.springboot.demo.entity.StudentInfo" >
+    insert into student_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        s_id,
+      </if>
+      <if test="sName != null" >
+        s_name,
+      </if>
+      <if test="sClass != null" >
+        s_class,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="sName != null" >
+        #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sClass != null" >
+        #{sClass,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.zyj.springboot.demo.entity.StudentInfo" >
+    update student_info
+    <set >
+      <if test="sName != null" >
+        s_name = #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sClass != null" >
+        s_class = #{sClass,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+    </set>
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+  <update id="updateStudent" parameterType="com.zyj.springboot.demo.entity.StudentInfo" >
+    update student_info
+    set s_name = #{sName,jdbcType=VARCHAR},
+      s_class = #{sClass,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER}
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+</mapper>
