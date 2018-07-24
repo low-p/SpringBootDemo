@@ -4,9 +4,9 @@ $ ssh-keygen -t rsa -C [email]
 2、登录Github, 进入Settings，找到SSH and GPG keys, 然后New SSH key，Title任意命名，   
    把步骤4中id_rsa.pub文件中的代码复制到Key下的文本框中，最后Add SSH key完成。
       
-#设置用户名以及用户邮箱   
-$ git config --global user.email "you@example.com"   
-$ git config --global user.name "Your Name"     
+#设置用户名以及用户邮箱([email]--邮箱; [name]--用户名)       
+$ git config --global user.email [email]    
+$ git config --global user.name [name]       
     
 #上传代码到Github步骤      
 1、查看当前文件状态       
