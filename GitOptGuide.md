@@ -16,13 +16,13 @@ $ git config user.email [email]
 $ git config user.name [name]
       
 #分支相关操作    
-//查看所有分支    
-$ git branch -a/-r   
-//拉取远程仓库所有更新 
-$ git fetch [remote]
-//拉取远程仓库分支的代码并合并到本地分支
-$ git pull [remote] [branch]
-//切换本地分支   
+//查看所有分支      
+$ git branch -a/-r     
+//拉取远程仓库所有更新   
+$ git fetch [remote]   
+//拉取远程仓库分支的代码并合并到本地分支   
+$ git pull [remote] [branch]    
+//切换本地分支     
 $ git checkout [BranchName]      
 //创建本地分支    
 $ git branch [BranchName]   
