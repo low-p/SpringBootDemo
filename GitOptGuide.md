@@ -13,7 +13,7 @@ $ git config --global user.email [email]
 $ git config --global user.name [name]     
 //进入config，当前项目设置    
 $ git config user.email [email]    
-$ git config user.name [name]
+$ git config user.name [name]   
       
 #分支相关操作    
 //查看所有分支      
