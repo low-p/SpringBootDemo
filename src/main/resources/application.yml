@@ -29,6 +29,26 @@ spring:
         mode: HTML5
         encoding: UTF-8
         cache: false
+    #redis基础配置
+    redis:
+        # Redis数据库索引（默认为0）
+        database: 0
+        host: 127.0.0.1
+        port: 6379
+        # 连接超时时间（毫秒）
+        timeout: 1000ms
+        #password:
+        jedis:
+          pool:
+            # 连接池最大连接数（使用负值表示没有限制）
+            max-active: 8
+            # 连接池中的最小空闲连接
+            min-idle: 0
+            # 连接池中的最大空闲连接
+            max-idle: 8
+            # 连接池最大阻塞等待时间（使用负值表示没有限制）
+            max-wait: -1ms
+
 #mybatis持久化层
 mybatis:
   mapper-locations: classpath:mapper/*.xml

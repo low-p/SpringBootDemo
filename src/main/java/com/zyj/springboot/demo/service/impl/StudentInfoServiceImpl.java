@@ -7,6 +7,8 @@ import com.zyj.springboot.demo.entity.StudentInfo;
 import com.zyj.springboot.demo.service.StudentInfoService;
 import com.zyj.springboot.demo.util.JsonUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,6 +25,7 @@ public class StudentInfoServiceImpl implements StudentInfoService {
 
 
     @Override
+    //@CachePut(value = "student", key = "#root.targetClass + #student.sId", unless = "#student eq null")
     public int insertStudent(StudentInfo student) {
         if (null != student) {
             this.checkStudentInfo(student);
@@ -48,6 +51,7 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     }
 
     @Override
+    //@Cacheable(value = "studentList", key = "#root.targetClass + #keyword", unless = "#result eq null")
     public PageInfo queryStudentList(int pageNum, int pageSize, String keyword) {
         PageHelper.startPage(pageNum, pageSize);
         List<StudentInfo> list = studentInfoDao.queryForList(keyword);
@@ -56,6 +60,7 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     }
 
     @Override
+    //@CachePut(value = "student", key = "#root.targetClass + #student.sId", unless = "#student eq null")
     public int editStudent(StudentInfo student) {
         if (null != student) {
             this.checkEditStident(student);

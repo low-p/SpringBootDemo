@@ -1,6 +1,8 @@
 package com.zyj.springboot.demo.entity;
 
-public class StudentInfo {
+import java.io.Serializable;
+
+public class StudentInfo implements Serializable {
     private Integer sId;
     private String sName;
     private String sClass;
