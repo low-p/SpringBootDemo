@@ -19,12 +19,21 @@ public class StudentInfoController {
     @Autowired
     private StudentInfoService studentInfoService;
 
+    /**
+     * 跳转学生信息列表页
+     * @return  String
+     */
     @RequestMapping(value = "/index")
     public String addStudentView(){
 
         return "student";
     }
 
+    /**
+     * 新增学生信息
+     * @param student
+     * @return String
+     */
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addStudent(StudentInfo student){
@@ -44,6 +53,11 @@ public class StudentInfoController {
         return JsonUtils.objectToJson(map);
     }
 
+    /**
+     * 更新学生信息
+     * @param student
+     * @return String
+     */
     @ResponseBody
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String editStudent(StudentInfo student){
@@ -63,6 +77,13 @@ public class StudentInfoController {
         return JsonUtils.objectToJson(map);
     }
 
+    /**
+     * 查询学生信息列表
+     * @param pageNum
+     * @param pageSize
+     * @param keyword
+     * @return String
+     */
     @ResponseBody
     @RequestMapping(value="/list", method = RequestMethod.GET)
     public String getList(@RequestParam(value="pageNum", required = false, defaultValue = "1") int pageNum,
@@ -73,6 +94,11 @@ public class StudentInfoController {
         return json;
     }
 
+    /**
+     * 批量删除学生信息
+     * @param ids
+     * @return String
+     */
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String bacthDelStudent(@RequestParam(value = "ids") int[] ids){
