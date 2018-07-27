@@ -1,7 +1,12 @@
 package com.zyj.springboot.demo;
 
+import com.zyj.springboot.demo.core.ResultPage;
+import com.zyj.springboot.demo.entity.StudentInfo;
+import com.zyj.springboot.demo.service.StudentInfoService;
+import com.zyj.springboot.demo.util.JsonUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.*;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -15,14 +20,24 @@ public class RedisCacheTest {
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
+    @Autowired
+    private StudentInfoService studentInfoService;
 
     @Test
     public void cacheValueTest(){
         ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
         //设置key为hello到Redis
         valueOperations.set("hello", "Hello Redis!!!", 1, TimeUnit.HOURS);
-
+        StudentInfo info = new StudentInfo();
+        info.setsId(1001);
+        info.setsName("赵橘子");
+        info.setsClass("三年四班");
+        info.setSex("男");
+        info.setAge(20);
+        valueOperations.set("studentInfo", info, 1, TimeUnit.HOURS);
         System.out.println("ValueHello: " + valueOperations.get("hello"));
+        Object obj = valueOperations.get("studentInfo");
+        System.out.println("ValueStudent: " + JsonUtils.objectToJson(obj));
     }
 
     @Test
@@ -106,4 +121,14 @@ public class RedisCacheTest {
         //System.out.println("Zset-stringZset:" + zSetOperations.incrementScore("stringZset", "zset-1", 1.1));
         //System.out.println("Zset-stringZset:" + zSetOperations.rangeByScore("stringZset",0, 4, 1, 2));
     }
+
+    @Test
+    public void cacheAOPTest(){
+        StudentInfo info = studentInfoService.findStudentById(12);
+        System.out.println("StudentInfo: " + info.toString());
+        ResultPage pageInfo = studentInfoService.queryStudentList(1, 5, "小");
+        System.out.println("StudentList: " + JsonUtils.objectToJson(pageInfo));
+
+    }
+
 }

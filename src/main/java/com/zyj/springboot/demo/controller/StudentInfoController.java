@@ -1,6 +1,7 @@
 package com.zyj.springboot.demo.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.zyj.springboot.demo.core.ResultPage;
 import com.zyj.springboot.demo.entity.StudentInfo;
 import com.zyj.springboot.demo.service.StudentInfoService;
 import com.zyj.springboot.demo.util.JsonUtils;
@@ -40,9 +41,9 @@ public class StudentInfoController {
         String result = "fail";
         try {
             //System.out.println("参数： "+JsonUtils.objectToJson(student));
-            int res = this.studentInfoService.insertStudent(student);
+            StudentInfo info = this.studentInfoService.insertStudent(student);
             //System.out.println("返回值： " + res);
-            if (res > 0)
+            if (null != info && null != info.getsId())
                 result = "success";
         } catch (Exception e){
             e.printStackTrace();
@@ -64,9 +65,9 @@ public class StudentInfoController {
         String result = "fail";
         try {
             //System.out.println("修改参数： "+JsonUtils.objectToJson(student));
-            int res = this.studentInfoService.editStudent(student);
+            StudentInfo info = this.studentInfoService.editStudent(student);
             //System.out.println("修改返回值： " + res);
-            if (res > 0)
+            if (null != info)
                 result = "success";
         } catch (Exception e){
             e.printStackTrace();
@@ -89,8 +90,8 @@ public class StudentInfoController {
     public String getList(@RequestParam(value="pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value="pageSize", required=false, defaultValue = "10") int pageSize,
             @RequestParam(value = "keyword", required = false) String keyword){
-        PageInfo page = this.studentInfoService.queryStudentList(pageNum, pageSize, keyword);
-        String json = "{\"total\":"+page.getTotal()+",\"rows\":"+JsonUtils.listToJson(page.getList()) +"}";
+        ResultPage page = this.studentInfoService.queryStudentList(pageNum, pageSize, keyword);
+        String json = JsonUtils.objectToJson(page);
         return json;
     }
 

@@ -2,14 +2,15 @@ package com.zyj.springboot.demo.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zyj.springboot.demo.core.ResultPage;
+import com.zyj.springboot.demo.core.cache.*;
 import com.zyj.springboot.demo.dao.StudentInfoDao;
 import com.zyj.springboot.demo.entity.StudentInfo;
 import com.zyj.springboot.demo.service.StudentInfoService;
-import com.zyj.springboot.demo.util.JsonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import sun.misc.Cache;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -23,15 +24,19 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     @Resource
     private StudentInfoDao studentInfoDao;
 
-
     @Override
-    //@CachePut(value = "student", key = "#root.targetClass + #student.sId", unless = "#student eq null")
-    public int insertStudent(StudentInfo student) {
+    //@CachePut(value = "STUDENT_UPDATE", key ="'STUDENT_INFO_' + #student.sId")
+    public synchronized StudentInfo insertStudent(StudentInfo student) {
         if (null != student) {
             this.checkStudentInfo(student);
-            return studentInfoDao.insert(student);
+            int res = studentInfoDao.insert(student);
+            if (res > 0) {
+                int sId = studentInfoDao.getLastId();
+                student.setsId(sId);
+                return student;
+            }
         }
-        return 0;
+        return null;
     }
 
     /**
@@ -51,22 +56,32 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     }
 
     @Override
-    //@Cacheable(value = "studentList", key = "#root.targetClass + #keyword", unless = "#result eq null")
-    public PageInfo queryStudentList(int pageNum, int pageSize, String keyword) {
+    @QueryCache(nameSpace = CacheNameSpace.STUDENT_QUERY)
+    public ResultPage queryStudentList(@QueryCacheKey int pageNum, @QueryCacheKey int pageSize, @QueryCacheKey String keyword) {
         PageHelper.startPage(pageNum, pageSize);
         List<StudentInfo> list = studentInfoDao.queryForList(keyword);
-        PageInfo result = new PageInfo(list);
+        ResultPage result = new ResultPage(new PageInfo(list));
         return result;
     }
 
     @Override
-    //@CachePut(value = "student", key = "#root.targetClass + #student.sId", unless = "#student eq null")
-    public int editStudent(StudentInfo student) {
+    @QueryCache(nameSpace = CacheNameSpace.STUDENT_QUERY)
+    public StudentInfo findStudentById (@QueryCacheKey Integer id){
+        StudentInfo info = studentInfoDao.findById(id);
+        return info;
+    }
+
+    //@CachePut(value = "STUDENT_UPDATE", key = "'STUDENT_INFO_' + #student.sId", unless = "#student eq null")
+    @Override
+    public synchronized StudentInfo editStudent(StudentInfo student) {
         if (null != student) {
             this.checkEditStident(student);
-            return studentInfoDao.update(student);
+            int res = studentInfoDao.update(student);
+            if(res > 0) {
+                return student;
+            }
         }
-        return 0;
+        return null;
     }
 
     @Override
@@ -91,7 +106,7 @@ public class StudentInfoServiceImpl implements StudentInfoService {
                 map.put("id", id);
                 idList.add(map);
             }
-            System.out.println("集合参数：" + JsonUtils.listToJson(idList));
+            //System.out.println("集合参数: " + JsonUtils.listToJson(idList));
             return this.studentInfoDao.batchDeleteStudent(idList);
             //return this.studentInfoDao.batchDelStudent(sIds.toString());
         }

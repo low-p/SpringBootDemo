@@ -11,11 +11,16 @@
   <sql id="Base_Column_List" >
     s_id, s_name, s_class, sex, age
   </sql>
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from student_info
     where s_id = #{sId,jdbcType=INTEGER}
+  </select>
+  <select id="getLastId" resultType="java.lang.Integer">
+    select
+      MAX(s_id) sId
+    from student_info
   </select>
   <select id="queryForList" resultType="com.zyj.springboot.demo.entity.StudentInfo" resultMap="BaseResultMap" parameterType="java.lang.String">
     select

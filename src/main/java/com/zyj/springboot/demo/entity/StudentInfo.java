@@ -48,4 +48,9 @@ public class StudentInfo implements Serializable {
     public void setAge(Integer age) {
         this.age = age;
     }
+
+    @Override
+    public String toString() {
+        return "StudentInfo{sId='"+sId+"', sName='"+sName+"', sClass='"+sClass+"', sex='"+sex+"', age='"+age+"'}";
+    }
 }

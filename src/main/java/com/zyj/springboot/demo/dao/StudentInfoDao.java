@@ -15,4 +15,8 @@ public interface StudentInfoDao {
     int update(StudentInfo student);
 
     int batchDeleteStudent(List<Map> idList);
+
+    StudentInfo findById(@Param(value = "sId") Integer id);
+
+    int getLastId();
 }
