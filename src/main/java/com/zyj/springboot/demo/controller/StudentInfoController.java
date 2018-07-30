@@ -1,6 +1,5 @@
 package com.zyj.springboot.demo.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.zyj.springboot.demo.core.ResultPage;
 import com.zyj.springboot.demo.entity.StudentInfo;
 import com.zyj.springboot.demo.service.StudentInfoService;
@@ -8,11 +7,15 @@ import com.zyj.springboot.demo.util.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @ClassName: StudentInfoController
+ * @Description:  学生信息控制层
+ * @author: orange
+ * @date: 2018/7/30 9:46
+ */
 @Controller
 @RequestMapping(value="/student")
 public class StudentInfoController {
@@ -38,7 +41,7 @@ public class StudentInfoController {
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addStudent(StudentInfo student){
-        String result = "fail";
+        String result = "failure";
         try {
             //System.out.println("参数： "+JsonUtils.objectToJson(student));
             StudentInfo info = this.studentInfoService.insertStudent(student);
@@ -47,7 +50,7 @@ public class StudentInfoController {
                 result = "success";
         } catch (Exception e){
             e.printStackTrace();
-            result = "fail";
+            result = "failure";
         }
         Map map = new HashMap();
         map.put("result", result);
@@ -62,7 +65,7 @@ public class StudentInfoController {
     @ResponseBody
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String editStudent(StudentInfo student){
-        String result = "fail";
+        String result = "failure";
         try {
             //System.out.println("修改参数： "+JsonUtils.objectToJson(student));
             StudentInfo info = this.studentInfoService.editStudent(student);
@@ -71,7 +74,7 @@ public class StudentInfoController {
                 result = "success";
         } catch (Exception e){
             e.printStackTrace();
-            result = "fail";
+            result = "failure";
         }
         Map map = new HashMap();
         map.put("result", result);
@@ -103,7 +106,7 @@ public class StudentInfoController {
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String bacthDelStudent(@RequestParam(value = "ids") int[] ids){
-        String result = "fail";
+        String result = "failure";
         try {
             //System.out.println("删除参数： "+ Arrays.toString(ids));
             int res = this.studentInfoService.batchDelStudent(ids);
@@ -112,7 +115,7 @@ public class StudentInfoController {
                 result = "success";
         } catch (Exception e){
             e.printStackTrace();
-            result = "fail";
+            result = "failure";
         }
         Map map = new HashMap();
         map.put("result", result);

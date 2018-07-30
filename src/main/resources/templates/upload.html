@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="/demo/webjars/jquery/jquery.min.js"></script>
+    <script src="/demo/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/demo/js/messenger.js"></script>
+    <script src="/demo/js/messenger-theme-future.js"></script>
+    <link rel="stylesheet" href="/demo/webjars/bootstrap/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/demo/css/messenger.css" type="text/css" />
+    <link rel="stylesheet" href="/demo/css/messenger-theme-future.css" type="text/css" />
+    <meta charset="UTF-8">
+    <title>上传</title>
+</head>
+<body>
+<div class="container-fluid" style="margin: 20px 60px;width: 1000px;">
+    <h4>上传示例</h4>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <div>
+            <input type="file" id="uploadFile" name="upload" >
+            <input type="button" id="uploadFileButton" value="上传">
+        </div>
+    </form>
+</div>
+</body>
+<script type="text/javascript">
+    $._messengerDefaults = {
+        extraClasses: 'messenger-fixed messenger-theme-future messenger-on-bottom'
+    }
+    $("#uploadFileButton").on('click', function(){
+        var data = new FormData();
+        var file = $("#uploadFile")[0].files[0];
+        data.append("upload", file);
+        $.post({
+            url: "/demo/upload/file",
+            type: "POST",
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                console.log("返回结果: " + res);
+                var dataRes = JSON.parse(res);
+                console.log("处理结果: " + dataRes);
+                if (dataRes.result=="success"){
+                    $.globalMessenger().post({
+                        message: "上传成功",
+                        hideAfter: 2,
+                        type: 'success'
+                    })
+                } else {
+                    $.globalMessenger().post({
+                        message: "上传失败",
+                        hideAfter: 2,
+                        type: 'info'
+                    })
+                }
+            },
+            error: function (res) {
+                console.log("返回结果：" + JSON.stringify(res));
+                $.globalMessenger().post({
+                    message: "请求异常",
+                    hideAfter: 2,
+                    type: 'error'
+                })
+            }
+        })
+    })
+</script>
+</html>

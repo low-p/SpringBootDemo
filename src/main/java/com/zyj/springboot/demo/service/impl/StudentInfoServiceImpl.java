@@ -8,10 +8,7 @@ import com.zyj.springboot.demo.dao.StudentInfoDao;
 import com.zyj.springboot.demo.entity.StudentInfo;
 import com.zyj.springboot.demo.service.StudentInfoService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
-import sun.misc.Cache;
-
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +22,6 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     private StudentInfoDao studentInfoDao;
 
     @Override
-    //@CachePut(value = "STUDENT_UPDATE", key ="'STUDENT_INFO_' + #student.sId")
     public synchronized StudentInfo insertStudent(StudentInfo student) {
         if (null != student) {
             this.checkStudentInfo(student);
@@ -56,8 +52,9 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     }
 
     @Override
-    @QueryCache(nameSpace = CacheNameSpace.STUDENT_QUERY)
-    public ResultPage queryStudentList(@QueryCacheKey int pageNum, @QueryCacheKey int pageSize, @QueryCacheKey String keyword) {
+    //@QueryCache(nameSpace = CacheNameSpace.STUDENT_QUERY)
+    //public ResultPage queryStudentList(@QueryCacheKey int pageNum, @QueryCacheKey int pageSize, @QueryCacheKey String keyword) {
+    public ResultPage queryStudentList(int pageNum, int pageSize, String keyword) {
         PageHelper.startPage(pageNum, pageSize);
         List<StudentInfo> list = studentInfoDao.queryForList(keyword);
         ResultPage result = new ResultPage(new PageInfo(list));
@@ -71,7 +68,6 @@ public class StudentInfoServiceImpl implements StudentInfoService {
         return info;
     }
 
-    //@CachePut(value = "STUDENT_UPDATE", key = "'STUDENT_INFO_' + #student.sId", unless = "#student eq null")
     @Override
     public synchronized StudentInfo editStudent(StudentInfo student) {
         if (null != student) {
