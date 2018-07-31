@@ -5,20 +5,25 @@ import com.zyj.springboot.demo.core.ResultPage;
 import com.zyj.springboot.demo.entity.StudentInfo;
 import com.zyj.springboot.demo.service.StudentInfoService;
 import com.zyj.springboot.demo.util.ExcelUtils;
+import com.zyj.springboot.demo.util.JsonUtils;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -29,19 +34,22 @@ public class ExcelPOITest {
     private StudentInfoService studentInfoService;
 
     @Test
-    public void exportStudentInfo(){
+    public void exportStudentInfo() throws IOException {
         ResultPage page = studentInfoService.queryStudentList(1, 50, "");
         List<StudentInfo> list = page.getRows();
         if (list.isEmpty()) throw new RuntimeException("未查询到学生信息");
-        HSSFWorkbook workbook = new HSSFWorkbook();
-        HSSFSheet sheet = workbook.createSheet("学生信息表");
-        HSSFRow row = null;
+        //HSSFWorkbook workbook = new HSSFWorkbook();
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("学生信息表");
+        Row row = null;
         row = sheet.createRow(0);
         row.setHeight((short) (26.25*20));
         row.createCell(0).setCellValue("学生信息列表");
-        row.getCell(0).setCellStyle(ExcelUtils.getStyle(workbook, ExcelStyleType.TITLE));
+        //row.getCell(0).setCellStyle(ExcelUtils.getHSSFStyle(workbook, ExcelStyleType.TITLE));
+        row.getCell(0).setCellStyle(ExcelUtils.getXSSFStyle(workbook, ExcelStyleType.TITLE));
         for (int i = 1; i < 5; i++) {
-            row.createCell(i).setCellStyle(ExcelUtils.getStyle(workbook, ExcelStyleType.TITLE));
+            //row.createCell(i).setCellStyle(ExcelUtils.getHSSFStyle(workbook, ExcelStyleType.TITLE));
+            row.createCell(i).setCellStyle(ExcelUtils.getXSSFStyle(workbook, ExcelStyleType.TITLE));
         }
         // 合并单元格(列)
         CellRangeAddress rowRegion = new CellRangeAddress(0,0,0,4);
@@ -52,14 +60,14 @@ public class ExcelPOITest {
 
         row = sheet.createRow(1);
         row.setHeight((short) (22.50*20));
-        //row.createCell(0).setCellStyle(ExcelUtils.getStyle(workbook, ExcelStyleType.COLUMN_TITLE));
         row.createCell(0).setCellValue("学生ID");
         row.createCell(1).setCellValue("学生姓名");
         row.createCell(2).setCellValue("学生班级");
         row.createCell(3).setCellValue("性别");
         row.createCell(4).setCellValue("年龄");
         for (int i = 0; i < 5; i++) {
-            row.getCell(i).setCellStyle(ExcelUtils.getStyle(workbook, ExcelStyleType.COLUMN));
+            //row.getCell(i).setCellStyle(ExcelUtils.getHSSFStyle(workbook, ExcelStyleType.COLUMN));
+            row.getCell(i).setCellStyle(ExcelUtils.getXSSFStyle(workbook, ExcelStyleType.COLUMN));
         }
 
         StudentInfo info = null;
@@ -72,7 +80,8 @@ public class ExcelPOITest {
             row.createCell(3).setCellValue(info.getSex());
             row.createCell(4).setCellValue(info.getAge());
             for (int j = 0; j < 5; j++) {
-                row.getCell(j).setCellStyle(ExcelUtils.getStyle(workbook, ExcelStyleType.CONTENT));
+                //row.getCell(j).setCellStyle(ExcelUtils.getHSSFStyle(workbook, ExcelStyleType.CONTENT));
+                row.getCell(j).setCellStyle(ExcelUtils.getXSSFStyle(workbook, ExcelStyleType.CONTENT));
             }
         }
         // 默认行高
@@ -81,14 +90,59 @@ public class ExcelPOITest {
         for (int i = 0; i < 10; i++) {
             sheet.autoSizeColumn(i);
         }
-        try {
-            File studentFile = new File("D:\\ProjectFiles\\download\\student.xls");
-            FileOutputStream fos = new FileOutputStream(studentFile);
-            workbook.write(fos);
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        File studentFile = new File("D:\\ProjectFiles\\download\\student-xlsx.xlsx");
+        FileOutputStream fos = new FileOutputStream(studentFile);
+        workbook.write(fos);
+        fos.close();
     }
 
+    @Test
+    public void importStudentExcel() throws IOException {
+        String filePath = "D:\\student-xlsx.xlsx";
+        File file = new File(filePath);
+        String suffix = file.getName().substring(file.getName().lastIndexOf("."));
+        Workbook wb = null;
+        InputStream ins = new FileInputStream(file);
+        if (".xlsx".equals(suffix)) {
+            wb = new XSSFWorkbook(ins);
+        } else if (".xls".equals(suffix)) {
+            wb = new HSSFWorkbook(ins);
+        } else {
+            throw new RuntimeException("文件格式不正确");
+        }
+        int sheetNums = wb.getNumberOfSheets(), rowNums = 0, cellNums = 0;
+        System.out.println("工作表数: " + sheetNums);
+        Sheet sheet = null;
+        Row row = null;
+        Cell cell = null;
+        List<StudentInfo> list = new ArrayList<>();
+        StudentInfo info = null;
+        // 遍历Sheet
+        for (int i = 0; i < sheetNums; i++) {
+            sheet = wb.getSheetAt(i);
+            rowNums = sheet.getPhysicalNumberOfRows();
+            if(i==0) System.out.println("行数: " + rowNums);
+            // 遍历行
+            for (int j = 0; j < rowNums; j++) {
+                row = sheet.getRow(j);
+                cellNums = row.getPhysicalNumberOfCells();
+                if(j==0) System.out.println("列数: " + cellNums);
+                if (j == 0 || j == 1) continue;  //标题行和标题栏
+                info = new StudentInfo();
+                // 遍历列
+                for(int k = 0; k < cellNums; k++){
+                    cell = row.getCell(k);
+                    if(k==0)info.setsName(cell.getStringCellValue());
+                    if(k==1)info.setsClass(cell.getStringCellValue());
+                    if(k==2)info.setSex(cell.getStringCellValue());
+                    if(k==3) {
+                        Double age = cell.getNumericCellValue();
+                        info.setAge(age.intValue());
+                    }
+                }
+                list.add(info);
+            }
+        }
+        System.out.println("解析Excel表格数据: " + JsonUtils.listToJson(list));
+    }
 }
