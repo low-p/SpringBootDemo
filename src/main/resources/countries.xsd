@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://com.zyj.springboot.demo/ws"
+        targetNamespace="http://com.zyj.springboot.demo/ws" elementFormDefault="qualified">
+    <xs:element name="getCountryRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCountryResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="country" type="tns:country"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="country">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"></xs:element>
+            <xs:element name="population" type="xs:integer"></xs:element>
+            <xs:element name="capital" type="xs:string"></xs:element>
+            <xs:element name="currency" type="tns:currency"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="currency">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GBP"></xs:enumeration>
+            <xs:enumeration value="EUR"></xs:enumeration>
+            <xs:enumeration value="PLN"></xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
