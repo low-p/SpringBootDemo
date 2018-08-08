@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zyj.springboot.demo.dao.StudentInfoDao" >
+<mapper namespace="com.zyj.springboot.demo.dao.IStudentInfoDao" >
   <resultMap id="BaseResultMap" type="com.zyj.springboot.demo.entity.StudentInfo" >
     <id column="s_id" property="sId" jdbcType="INTEGER" />
     <result column="s_name" property="sName" jdbcType="VARCHAR" />

@@ -3,7 +3,7 @@ package com.zyj.springboot.demo.service;
 import com.zyj.springboot.demo.core.ResultPage;
 import com.zyj.springboot.demo.entity.StudentInfo;
 
-public interface StudentInfoService {
+public interface IStudentInfoService {
     /**
      * 新增学生信息
      * @param student

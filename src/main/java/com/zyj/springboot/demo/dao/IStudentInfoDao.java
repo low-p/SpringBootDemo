@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 import java.util.Map;
 
-public interface StudentInfoDao {
+public interface IStudentInfoDao {
 
     int insert(StudentInfo student);
 

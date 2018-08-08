@@ -2,7 +2,7 @@ package com.zyj.springboot.demo.controller;
 
 import com.zyj.springboot.demo.core.ResultPage;
 import com.zyj.springboot.demo.entity.StudentInfo;
-import com.zyj.springboot.demo.service.StudentInfoService;
+import com.zyj.springboot.demo.service.IStudentInfoService;
 import com.zyj.springboot.demo.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ import java.util.Map;
 public class StudentInfoController {
     public static final Logger logger = LoggerFactory.getLogger(StudentInfoController.class);
     @Autowired
-    private StudentInfoService studentInfoService;
+    private IStudentInfoService studentInfoService;
 
     /**
      * 跳转学生信息列表页

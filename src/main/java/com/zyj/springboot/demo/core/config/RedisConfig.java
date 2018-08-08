@@ -1,4 +1,4 @@
-package com.zyj.springboot.demo.core;
+package com.zyj.springboot.demo.core.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

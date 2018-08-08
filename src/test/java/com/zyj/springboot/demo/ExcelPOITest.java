@@ -3,13 +3,10 @@ package com.zyj.springboot.demo;
 import com.zyj.springboot.demo.core.ExcelStyleType;
 import com.zyj.springboot.demo.core.ResultPage;
 import com.zyj.springboot.demo.entity.StudentInfo;
-import com.zyj.springboot.demo.service.StudentInfoService;
+import com.zyj.springboot.demo.service.IStudentInfoService;
 import com.zyj.springboot.demo.util.ExcelUtils;
 import com.zyj.springboot.demo.util.JsonUtils;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -33,7 +30,7 @@ import java.util.List;
 public class ExcelPOITest {
     public static final Logger logger = LoggerFactory.getLogger(ExcelPOITest.class);
     @Resource
-    private StudentInfoService studentInfoService;
+    private IStudentInfoService studentInfoService;
 
     @Test
     public void exportStudentInfo() throws IOException {

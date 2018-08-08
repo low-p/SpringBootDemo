@@ -1,4 +1,4 @@
-package com.zyj.springboot.demo.core;
+package com.zyj.springboot.demo.core.config;
 
 import com.zyj.springboot.demo.core.queue.Receiver;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

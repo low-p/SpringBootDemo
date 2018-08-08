@@ -2,7 +2,7 @@ package com.zyj.springboot.demo;
 
 import com.zyj.springboot.demo.core.ResultPage;
 import com.zyj.springboot.demo.entity.StudentInfo;
-import com.zyj.springboot.demo.service.StudentInfoService;
+import com.zyj.springboot.demo.service.IStudentInfoService;
 import com.zyj.springboot.demo.util.JsonUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +23,7 @@ public class RedisCacheTest {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
-    private StudentInfoService studentInfoService;
+    private IStudentInfoService studentInfoService;
 
     @Test
     public void cacheValueTest(){

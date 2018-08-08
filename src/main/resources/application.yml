@@ -61,3 +61,18 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
     returnPageInfo: check
+
+#memcached基础配置
+memcached:
+    servers: 127.0.0.1:11211
+    weights: 3
+    failover: true
+    initConn: 20
+    minConn: 20
+    maxConn: 100
+    maintSleep: 50
+    nagle: false
+    socketTO: 3000
+    aliveCheck: true
+    maxIdle: 900000
+    socketConnectTO: 0

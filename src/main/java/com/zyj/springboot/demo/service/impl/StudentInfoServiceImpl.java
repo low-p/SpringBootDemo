@@ -4,9 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zyj.springboot.demo.core.ResultPage;
 import com.zyj.springboot.demo.core.cache.*;
-import com.zyj.springboot.demo.dao.StudentInfoDao;
+import com.zyj.springboot.demo.dao.IStudentInfoDao;
 import com.zyj.springboot.demo.entity.StudentInfo;
-import com.zyj.springboot.demo.service.StudentInfoService;
+import com.zyj.springboot.demo.service.IStudentInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 @Service("studentInfoService")
-public class StudentInfoServiceImpl implements StudentInfoService {
+public class StudentInfoServiceImpl implements IStudentInfoService {
     public static final Logger logger = LoggerFactory.getLogger(StudentInfoServiceImpl.class);
     @Resource
-    private StudentInfoDao studentInfoDao;
+    private IStudentInfoDao studentInfoDao;
 
     @Override
     public synchronized StudentInfo insertStudent(StudentInfo student) {
