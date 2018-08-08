@@ -8,6 +8,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.SynthesizingMethodParameter;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @Aspect
 @Service
 public class DBCacheAspect {
-
+    public static final Logger logger = LoggerFactory.getLogger(DBCacheAspect.class);
     @Resource
     private RedisTemplate redisTemplate;
 
@@ -41,7 +43,7 @@ public class DBCacheAspect {
     @Around("queryCachePointcut()")
     public Object queryCacheInterceptor(ProceedingJoinPoint pjp) throws Throwable{
         Long startTime = System.currentTimeMillis();
-        System.out.println("Query--AOP--查询缓存切面--START>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        logger.info(">>>>>>Query--AOP--查询缓存切面--START>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         // 获取拦截方法
         Method method = signature.getMethod();
@@ -65,23 +67,23 @@ public class DBCacheAspect {
             i++;
         }
         if (StringUtils.isBlank(key)) throw new RuntimeException("Query--缓存key值不存在");
-        System.out.println("Query--获取到缓存中key值>>>>>>" + key);
+        logger.info(">>>>>>Query--获取到缓存中key值>>>>>>" + key);
         ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
         boolean hasKey = redisTemplate.hasKey(key);
         if (hasKey) {
             // 从缓存中获取数据返回
             Object object = valueOperations.get(key);
-            System.out.println("Query--缓存获取数据>>>>>>" + JsonUtils.objectToJson(object));
-            System.out.println("Query--AOP--查询缓存切面--END--耗时>>>>>>" + (System.currentTimeMillis() - startTime) + "");
+            logger.info(">>>>>>Query--缓存获取数据>>>>>>" + JsonUtils.objectToJson(object));
+            logger.info(">>>>>>Query--AOP--查询缓存切面--END--耗时>>>>>>" + (System.currentTimeMillis() - startTime) + "");
             return object;
         }
         // 如果缓存中没有数据，调用原始方法查询数据库
         Object object = pjp.proceed();
         if (null != object) {
             valueOperations.set(key, object, 30, TimeUnit.MINUTES);
-            System.out.println("Query--DB获取数据并存入缓存>>>>>>" + JsonUtils.objectToJson(object));
+            logger.info(">>>>>>Query--DB获取数据并存入缓存>>>>>>" + JsonUtils.objectToJson(object));
         }
-        System.out.println("Query--AOP--查询缓存切面--END--耗时>>>>>>" + (System.currentTimeMillis() - startTime) + "");
+        logger.info(">>>>>>Query--AOP--查询缓存切面--END--耗时>>>>>>" + (System.currentTimeMillis() - startTime) + "");
         return object;
     }
 }

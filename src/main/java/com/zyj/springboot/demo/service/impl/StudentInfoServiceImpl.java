@@ -8,6 +8,8 @@ import com.zyj.springboot.demo.dao.StudentInfoDao;
 import com.zyj.springboot.demo.entity.StudentInfo;
 import com.zyj.springboot.demo.service.StudentInfoService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import java.util.Map;
 
 @Service("studentInfoService")
 public class StudentInfoServiceImpl implements StudentInfoService {
-
+    public static final Logger logger = LoggerFactory.getLogger(StudentInfoServiceImpl.class);
     @Resource
     private StudentInfoDao studentInfoDao;
 
@@ -93,7 +95,7 @@ public class StudentInfoServiceImpl implements StudentInfoService {
                     sIds.append(ids[i]);
                 }
             }
-            System.out.println("参数转换："+sIds.toString());*/
+            logger.info("参数转换："+sIds.toString());*/
             // 第二种实现：疯转集合
             List<Map> idList = new ArrayList<>();
             Map map = null;
@@ -102,7 +104,7 @@ public class StudentInfoServiceImpl implements StudentInfoService {
                 map.put("id", id);
                 idList.add(map);
             }
-            //System.out.println("集合参数: " + JsonUtils.listToJson(idList));
+            //logger.info("集合参数: " + JsonUtils.listToJson(idList));
             return this.studentInfoDao.batchDeleteStudent(idList);
             //return this.studentInfoDao.batchDelStudent(sIds.toString());
         }

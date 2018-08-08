@@ -18,6 +18,8 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -29,7 +31,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ExcelPOITest {
-
+    public static final Logger logger = LoggerFactory.getLogger(ExcelPOITest.class);
     @Resource
     private StudentInfoService studentInfoService;
 
@@ -111,7 +113,7 @@ public class ExcelPOITest {
             throw new RuntimeException("文件格式不正确");
         }
         int sheetNums = wb.getNumberOfSheets(), rowNums = 0, cellNums = 0;
-        System.out.println("工作表数: " + sheetNums);
+        logger.info(">>>>>>>>>>>>>>>>>>>>工作表数: " + sheetNums);
         Sheet sheet = null;
         Row row = null;
         Cell cell = null;
@@ -121,12 +123,12 @@ public class ExcelPOITest {
         for (int i = 0; i < sheetNums; i++) {
             sheet = wb.getSheetAt(i);
             rowNums = sheet.getPhysicalNumberOfRows();
-            if(i==0) System.out.println("行数: " + rowNums);
+            if(i==0) logger.info(">>>>>>>>>>>>>>>>>>>>行数: " + rowNums);
             // 遍历行
             for (int j = 0; j < rowNums; j++) {
                 row = sheet.getRow(j);
                 cellNums = row.getPhysicalNumberOfCells();
-                if(j==0) System.out.println("列数: " + cellNums);
+                if(j==0) logger.info(">>>>>>>>>>>>>>>>>>>>列数: " + cellNums);
                 if (j == 0 || j == 1) continue;  //标题行和标题栏
                 info = new StudentInfo();
                 // 遍历列
@@ -143,6 +145,6 @@ public class ExcelPOITest {
                 list.add(info);
             }
         }
-        System.out.println("解析Excel表格数据: " + JsonUtils.listToJson(list));
+        logger.info(">>>>>>>>>>>>>>>>>>>>解析Excel表格数据: " + JsonUtils.listToJson(list));
     }
 }

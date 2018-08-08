@@ -1,6 +1,8 @@
 package com.zyj.springboot.demo.controller;
 
 import com.zyj.springboot.demo.service.IPublisherService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class PublisherController {
+    public static final Logger logger = LoggerFactory.getLogger(PublisherController.class);
 
     @Autowired
     private IPublisherService publisherService;
@@ -29,7 +32,7 @@ public class PublisherController {
 
     @RequestMapping(value = "pub")
     public String testPublishMsg(){
-        System.out.println("开始发送消息>>>>>>>>>>");
+        logger.info("开始发送消息>>>>>>>>>>");
         stringRedisTemplate.convertAndSend("msg", "TestQueueMessageSuccess");
         return "success";
     }

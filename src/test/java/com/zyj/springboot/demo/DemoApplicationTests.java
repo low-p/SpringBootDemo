@@ -6,6 +6,8 @@ import com.zyj.springboot.demo.util.JsonUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -16,6 +18,7 @@ import javax.annotation.Resource;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DemoApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class DemoApplicationTests {
+    public static final Logger logger = LoggerFactory.getLogger(DemoApplicationTests.class);
 
     @Resource
     private TestRestTemplate template;
@@ -36,6 +39,6 @@ public class DemoApplicationTests {
         student.setSex("女");
         student.setAge(20);
         StudentInfo info = studentInfoService.insertStudent(student);
-        System.out.println("StudentInfo: " + JsonUtils.objectToJson(info));
+        logger.info("StudentInfo: " + JsonUtils.objectToJson(info));
     }
 }

@@ -6,6 +6,8 @@ import com.zyj.springboot.demo.service.StudentInfoService;
 import com.zyj.springboot.demo.util.JsonUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.*;
@@ -17,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RedisCacheTest {
-
+    public static final Logger logger = LoggerFactory.getLogger(RedisCacheTest.class);
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
@@ -35,9 +37,9 @@ public class RedisCacheTest {
         info.setSex("男");
         info.setAge(20);
         valueOperations.set("studentInfo", info, 1, TimeUnit.HOURS);
-        System.out.println("ValueHello: " + valueOperations.get("hello"));
+        logger.info(">>>>>>>>>>>>>ValueHello: " + valueOperations.get("hello"));
         Object obj = valueOperations.get("studentInfo");
-        System.out.println("ValueStudent: " + JsonUtils.objectToJson(obj));
+        logger.info(">>>>>>>>>>>>>ValueStudent: " + JsonUtils.objectToJson(obj));
     }
 
     @Test
@@ -55,7 +57,7 @@ public class RedisCacheTest {
         //hashOperations.put("appleHash", "name", "橘子");
         //hashOperations.put("appleHash", "type", "香橘");
         //hashOperations.put("appleHash", "area", "上海青浦");
-        System.out.println("HashAplleName: " + hashOperations.get("appleHash", "name"));
+        logger.info(">>>>>>>>>>>>>HashAplleName: " + hashOperations.get("appleHash", "name"));
     }
 
     @Test
@@ -75,7 +77,7 @@ public class RedisCacheTest {
         //listOperations.leftPush("listObject", "c++", "javaScript");
         //在listObject集合中c++右侧加入元素ruby
         //listOperations.rightPush("listObject", "c++", "ruby");
-        System.out.println("ListString: " + listOperations.range("listObject", 0, -1));
+        logger.info(">>>>>>>>>>>>>ListString: " + listOperations.range("listObject", 0, -1));
     }
 
     @Test
@@ -94,10 +96,10 @@ public class RedisCacheTest {
         // 求languageSet和languageSet2并集存入languageSet4
         setOperations.unionAndStore("languageSet", "languageSet2", "languageSet4");
 
-        System.out.println("Set-languageSet:" + setOperations.members("languageSet"));
-        System.out.println("Set-languageSet2:" + setOperations.members("languageSet2"));
-        System.out.println("Set-languageSet3:" + setOperations.members("languageSet3"));
-        System.out.println("Set-languageSet4:" + setOperations.members("languageSet4"));
+        logger.info(">>>>>>>>>>>>>Set-languageSet:" + setOperations.members("languageSet"));
+        logger.info(">>>>>>>>>>>>>Set-languageSet2:" + setOperations.members("languageSet2"));
+        logger.info(">>>>>>>>>>>>>Set-languageSet3:" + setOperations.members("languageSet3"));
+        logger.info(">>>>>>>>>>>>>Set-languageSet4:" + setOperations.members("languageSet4"));
     }
 
     @Test
@@ -117,17 +119,17 @@ public class RedisCacheTest {
         tuples.add(typedTuple1);
         zSetOperations.add("stringZset", tuples);
 
-        System.out.println("Zset-stringZset:" + zSetOperations.range("stringZset", 0, -1));
-        //System.out.println("Zset-stringZset:" + zSetOperations.incrementScore("stringZset", "zset-1", 1.1));
-        //System.out.println("Zset-stringZset:" + zSetOperations.rangeByScore("stringZset",0, 4, 1, 2));
+        logger.info(">>>>>>>>>>>>>Zset-stringZset:" + zSetOperations.range("stringZset", 0, -1));
+        //logger.info(">>>>>>>>>>>>>Zset-stringZset:" + zSetOperations.incrementScore("stringZset", "zset-1", 1.1));
+        //logger.info(">>>>>>>>>>>>>Zset-stringZset:" + zSetOperations.rangeByScore("stringZset",0, 4, 1, 2));
     }
 
     @Test
     public void cacheAOPTest(){
         StudentInfo info = studentInfoService.findStudentById(12);
-        System.out.println("StudentInfo: " + info.toString());
+        logger.info(">>>>>>>>>>>>>StudentInfo: " + info.toString());
         ResultPage pageInfo = studentInfoService.queryStudentList(1, 5, "小");
-        System.out.println("StudentList: " + JsonUtils.objectToJson(pageInfo));
+        logger.info(">>>>>>>>>>>>>StudentList: " + JsonUtils.objectToJson(pageInfo));
 
     }
 

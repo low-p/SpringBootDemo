@@ -1,5 +1,7 @@
 package com.zyj.springboot.demo.core.queue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.concurrent.CountDownLatch;
 
@@ -10,7 +12,7 @@ import java.util.concurrent.CountDownLatch;
  * @date: 2018/8/7 15:09
  */
 public class Receiver {
-
+    public static final Logger logger = LoggerFactory.getLogger(Receiver.class);
     private CountDownLatch latch;
 
     @Autowired
@@ -19,7 +21,7 @@ public class Receiver {
     }
 
     public void receiveMsg(String message){
-        System.out.println("ReceiveMessage: <" + message + ">");
+        logger.info("ReceiveMessage>>>>>>>>>>>>>>>>>>[" + message + "]");
         latch.countDown();
     }
 }

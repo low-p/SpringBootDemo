@@ -4,6 +4,8 @@ import com.zyj.springboot.demo.core.ResultPage;
 import com.zyj.springboot.demo.entity.StudentInfo;
 import com.zyj.springboot.demo.service.StudentInfoService;
 import com.zyj.springboot.demo.util.JsonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value="/student")
 public class StudentInfoController {
-
+    public static final Logger logger = LoggerFactory.getLogger(StudentInfoController.class);
     @Autowired
     private StudentInfoService studentInfoService;
 
@@ -43,9 +45,9 @@ public class StudentInfoController {
     public String addStudent(StudentInfo student){
         String result = "failure";
         try {
-            //System.out.println("参数： "+JsonUtils.objectToJson(student));
+            //logger.info("参数>>>>>>>>>>>>>>>>>>>>>>>>"+JsonUtils.objectToJson(student));
             StudentInfo info = this.studentInfoService.insertStudent(student);
-            //System.out.println("返回值： " + res);
+            //logger.info("返回值>>>>>>>>>>>>>>>>>>>>>>>>" + res);
             if (null != info && null != info.getsId())
                 result = "success";
         } catch (Exception e){
@@ -67,9 +69,9 @@ public class StudentInfoController {
     public String editStudent(StudentInfo student){
         String result = "failure";
         try {
-            //System.out.println("修改参数： "+JsonUtils.objectToJson(student));
+            //logger.info("修改参数>>>>>>>>>>>>>>>>>>>>>>>>"+JsonUtils.objectToJson(student));
             StudentInfo info = this.studentInfoService.editStudent(student);
-            //System.out.println("修改返回值： " + res);
+            //logger.info("修改返回值>>>>>>>>>>>>>>>>>>>>>>>>" + res);
             if (null != info)
                 result = "success";
         } catch (Exception e){
@@ -108,9 +110,9 @@ public class StudentInfoController {
     public String bacthDelStudent(@RequestParam(value = "ids") int[] ids){
         String result = "failure";
         try {
-            //System.out.println("删除参数： "+ Arrays.toString(ids));
+            //logger.info("删除参数>>>>>>>>>>>>>>>>>>>>>>>>"+ Arrays.toString(ids));
             int res = this.studentInfoService.batchDelStudent(ids);
-            //System.out.println("删除返回值： " + res);
+            //logger.info("删除返回值>>>>>>>>>>>>>>>>>>>>>>>>" + res);
             if (res > 0)
                 result = "success";
         } catch (Exception e){

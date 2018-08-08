@@ -2,6 +2,8 @@ package com.zyj.springboot.demo.controller;
 
 import com.zyj.springboot.demo.util.JsonUtils;
 import com.zyj.springboot.demo.util.UUIDUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +25,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/upload")
 public class FileUploadController {
+    public static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
     /**
      * 跳转上传页面
@@ -46,11 +49,11 @@ public class FileUploadController {
         try {
             if (uploadFile.isEmpty()) return "文件不存在";
             String originName = uploadFile.getOriginalFilename();
-            System.out.println("文件名>>>>>>" + originName);
+            logger.info("文件名>>>>>>>>>>>>" + originName);
             String suffix = originName.substring(originName.lastIndexOf("."));
-            System.out.println("后缀名>>>>>>" + suffix);
+            logger.info("后缀名>>>>>>>>>>>>>" + suffix);
             String fileName = UUIDUtils.UUIDStr() + suffix;
-            System.out.println("生成新文件名>>>>>>" + fileName);
+            logger.info("生成新文件名>>>>>>>>>>>>" + fileName);
             String filePath = "D:\\ProjectFiles\\upload\\";
             String path = filePath + fileName;
             File file = new File(path);
