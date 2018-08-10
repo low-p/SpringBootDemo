@@ -1,6 +1,6 @@
 server:
   #服务端口
-  port: 8090
+  port: 8091
   servlet:
     #访问路径
     context-path: /demo
@@ -76,3 +76,7 @@ memcached:
     aliveCheck: true
     maxIdle: 900000
     socketConnectTO: 0
+
+#SSO配置信息
+sso:
+    repeatLogin: true

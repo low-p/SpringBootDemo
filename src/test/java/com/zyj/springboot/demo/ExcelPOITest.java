@@ -100,7 +100,7 @@ public class ExcelPOITest {
         String filePath = "D:\\student-xlsx.xlsx";
         File file = new File(filePath);
         String suffix = file.getName().substring(file.getName().lastIndexOf("."));
-        Workbook wb = null;
+        Workbook wb;
         InputStream ins = new FileInputStream(file);
         if (".xlsx".equals(suffix)) {
             wb = new XSSFWorkbook(ins);
@@ -109,13 +109,13 @@ public class ExcelPOITest {
         } else {
             throw new RuntimeException("文件格式不正确");
         }
-        int sheetNums = wb.getNumberOfSheets(), rowNums = 0, cellNums = 0;
+        int sheetNums = wb.getNumberOfSheets(), rowNums, cellNums;
         logger.info(">>>>>>>>>>>>>>>>>>>>工作表数: " + sheetNums);
-        Sheet sheet = null;
-        Row row = null;
-        Cell cell = null;
+        Sheet sheet;
+        Row row;
+        Cell cell;
         List<StudentInfo> list = new ArrayList<>();
-        StudentInfo info = null;
+        StudentInfo info;
         // 遍历Sheet
         for (int i = 0; i < sheetNums; i++) {
             sheet = wb.getSheetAt(i);

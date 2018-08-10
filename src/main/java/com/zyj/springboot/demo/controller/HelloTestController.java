@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloTestController {
 
-    @RequestMapping(value="/hello")
+    @RequestMapping(value="/test/hello")
     public String hello(){
 
         return "index";
     }
 
-    @RequestMapping(value = "/test")
+    @RequestMapping(value = "/test/success")
     public String testString(){
 
         return "success";

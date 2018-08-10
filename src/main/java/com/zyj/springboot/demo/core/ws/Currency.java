@@ -6,9 +6,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>currencyµÄ Java Àà¡£
- * 
- * <p>ÒÔÏÂÄ£Ê½Æ¬¶ÎÖ¸¶¨°üº¬ÔÚ´ËÀàÖĞµÄÔ¤ÆÚÄÚÈİ¡£
+ * <p>currencyçš„ Java ç±»ã€‚
+ *
+ * <p>ä»¥ä¸‹æ¨¡å¼ç‰‡æ®µæŒ‡å®šåŒ…å«åœ¨æ­¤ç±»ä¸­çš„é¢„æœŸå†…å®¹ã€‚
  * <p>
  * <pre>
  * &lt;simpleType name="currency">
@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
- * 
+ *
  */
 @XmlType(name = "currency", namespace = "http://com.zyj.springboot.demo/ws")
 @XmlEnum

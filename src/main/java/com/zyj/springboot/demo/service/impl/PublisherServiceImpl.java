@@ -19,24 +19,30 @@ public class PublisherServiceImpl implements IPublisherService {
     private CountDownLatch countDownLatch;
 
     @Override
-    public String publishMsg(String id) {
-        // 第一种测试
-        logger.info("我要开始发送消息啦>>>>>>>>>>>>>>>>>>");
+    public String publishMsg(String key) {
+        // 第一种写法   默认发送
+        if ("test".equals(key)) {
+            logger.info("FirstMethod----我要开始发送消息啦>>>>>>>>>>>>>>>>>>");
+            stringRedisTemplate.convertAndSend("msg", "WelcomeUseRedisQueueMessage");
+            logger.info("FirstMethod----正在发送消息>>>>>>>>>>>>>>>>>>");
+            return "success";
+        }
+        return "failure";
+    }
+
+    @Override
+    public String testPubMsg() {
+        logger.info("SecondMethod----我要开始发送消息啦>>>>>>>>>>>>>>>>>>");
+        // 第二种写法   指定延迟时间发送
         stringRedisTemplate.convertAndSend("msg", "欢迎使用Redis消息队列");
         try {
-            logger.info("正在发送消息>>>>>>>>>>>>>>>>>>");
+            logger.info("SecondMethod----正在发送消息>>>>>>>>>>>>>>>>>>");
             countDownLatch.await(2000, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
-            logger.info("发送消息失败>>>>>>>>>>>>>>>>>>");
+            logger.info("SecondMethod----发送消息失败>>>>>>>>>>>>>>>>>>");
+            return "failure";
         }
         return "success";
-        // 第二种测试
-        /*if ("1".equals(id)) {
-            stringRedisTemplate.convertAndSend("msg", "13636666666");
-            logger.info("Publisher  Sendes  Topic>>>>>>>>>>>>>>>>>>>");
-            return "success";
-        }
-        return "failure";*/
     }
 }

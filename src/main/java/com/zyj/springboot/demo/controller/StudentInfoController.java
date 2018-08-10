@@ -29,7 +29,7 @@ public class StudentInfoController {
      * 跳转学生信息列表页
      * @return  String
      */
-    @RequestMapping(value = "/index")
+    @RequestMapping(value = "/home")
     public String addStudentView(){
 
         return "student";

@@ -4,7 +4,6 @@ import com.zyj.springboot.demo.service.IPublisherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,19 +20,16 @@ public class PublisherController {
 
     @Autowired
     private IPublisherService publisherService;
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
 
-    @RequestMapping(value = "publish/{id}")
-    public String pubMsg(@PathVariable String id){
+    @RequestMapping(value = "publish/{key}")
+    public String pubMsg(@PathVariable String key){
 
-        return publisherService.publishMsg(id);
+        return publisherService.publishMsg(key);
     }
 
-    @RequestMapping(value = "pub")
+    @RequestMapping(value = "publish")
     public String testPublishMsg(){
-        logger.info("开始发送消息>>>>>>>>>>");
-        stringRedisTemplate.convertAndSend("msg", "TestQueueMessageSuccess");
-        return "success";
+
+        return publisherService.testPubMsg();
     }
 }

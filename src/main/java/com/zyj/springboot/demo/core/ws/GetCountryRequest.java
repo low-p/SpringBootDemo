@@ -9,10 +9,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>anonymous complex typeµÄ Java Àà¡£
- * 
- * <p>ÒÔÏÂÄ£Ê½Æ¬¶ÎÖ¸¶¨°üº¬ÔÚ´ËÀàÖĞµÄÔ¤ÆÚÄÚÈİ¡£
- * 
+ * <p>anonymous complex typeçš„ Java ç±»ã€‚
+ *
+ * <p>ä»¥ä¸‹æ¨¡å¼ç‰‡æ®µæŒ‡å®šåŒ…å«åœ¨æ­¤ç±»ä¸­çš„é¢„æœŸå†…å®¹ã€‚
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -24,12 +24,12 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "name"
+        "name"
 })
 @XmlRootElement(name = "getCountryRequest", namespace = "http://com.zyj.springboot.demo/ws")
 public class GetCountryRequest {
@@ -38,24 +38,24 @@ public class GetCountryRequest {
     protected String name;
 
     /**
-     * »ñÈ¡nameÊôĞÔµÄÖµ¡£
-     * 
+     * è·å–nameå±æ€§çš„å€¼ã€‚
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getName() {
         return name;
     }
 
     /**
-     * ÉèÖÃnameÊôĞÔµÄÖµ¡£
-     * 
+     * è®¾ç½®nameå±æ€§çš„å€¼ã€‚
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setName(String value) {
         this.name = value;

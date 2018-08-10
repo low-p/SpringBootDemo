@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>欢迎首页</title>
+    <title>SpringBoot-Demo-Login-Purple</title>
+    <link href="/demo/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/demo/ico/usericon.png">
+    <!-- -->
+    <script src="/demo/js/jquery.min.js"></script>
+    <script src="/demo/webjars/popper.js/umd/popper.min.js"></script>
+    <script src="/demo/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/demo/js/login.js"></script>
 </head>
 <body>
-    <h4>Hello SrpingBoot !!!!!!!!!!!!!!!</h4>
+<!-- contact-form -->
+<div class="message warning">
+    <div class="inset">
+        <div class="login-head">
+            <h1><!--User Login Form-->用户登录</h1>
+            <!--<div class="alert-close"> </div>-->
+        </div>
+        <form id="loginForm">
+            <li>
+                <input type="text" class="text" id="username" name="username" value="用户名" data-toggle="tooltip" data-trigger="manual" data-placement="top" data-html="true"
+                       onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户名';}" data-title="<span class='msgspan'>请输入用户名</span>">
+                <a href="#" class=" icon user"></a>
+            </li>
+            <div class="clear"> </div>
+            <li>
+                <input type="password" id="password" name="password" value="Password" data-toggle="tooltip" data-trigger="manual" data-placement="bottom" data-html="true"
+                       onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}" data-title="<span class='msgspan'>请输入用户密码</span>">
+                <a href="#" class="icon lock"></a>
+            </li>
+            <div class="clear"> </div>
+            <div class="submit">
+                <input type="button" onclick="loginFun()" value="登录" >
+                <h4><a href="#"><!--Lost your Password ?-->忘记密码?</a></h4>
+                <div class="clear">  </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+<div class="clear"> </div>
+<!--- footer --->
+<div class="footer">
+    <p>Bootstrap Login Model &copy; 2018.08</p>
+</div>
+
 </body>
 </html>

@@ -9,10 +9,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>country complex typeµÄ Java Àà¡£
- * 
- * <p>ÒÔÏÂÄ£Ê½Æ¬¶ÎÖ¸¶¨°üº¬ÔÚ´ËÀàÖĞµÄÔ¤ÆÚÄÚÈİ¡£
- * 
+ * <p>country complex typeçš„ Java ç±»ã€‚
+ *
+ * <p>ä»¥ä¸‹æ¨¡å¼ç‰‡æ®µæŒ‡å®šåŒ…å«åœ¨æ­¤ç±»ä¸­çš„é¢„æœŸå†…å®¹ã€‚
+ *
  * <pre>
  * &lt;complexType name="country">
  *   &lt;complexContent>
@@ -27,15 +27,15 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "country", namespace = "http://com.zyj.springboot.demo/ws", propOrder = {
-    "name",
-    "population",
-    "capital",
-    "currency"
+        "name",
+        "population",
+        "capital",
+        "currency"
 })
 public class Country {
 
@@ -50,96 +50,96 @@ public class Country {
     protected Currency currency;
 
     /**
-     * »ñÈ¡nameÊôĞÔµÄÖµ¡£
-     * 
+     * è·å–nameå±æ€§çš„å€¼ã€‚
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getName() {
         return name;
     }
 
     /**
-     * ÉèÖÃnameÊôĞÔµÄÖµ¡£
-     * 
+     * è®¾ç½®nameå±æ€§çš„å€¼ã€‚
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setName(String value) {
         this.name = value;
     }
 
     /**
-     * »ñÈ¡populationÊôĞÔµÄÖµ¡£
-     * 
+     * è·å–populationå±æ€§çš„å€¼ã€‚
+     *
      * @return
      *     possible object is
      *     {@link Integer }
-     *     
+     *
      */
     public Integer getPopulation() {
         return population;
     }
 
     /**
-     * ÉèÖÃpopulationÊôĞÔµÄÖµ¡£
-     * 
+     * è®¾ç½®populationå±æ€§çš„å€¼ã€‚
+     *
      * @param value
      *     allowed object is
      *     {@link Integer }
-     *     
+     *
      */
     public void setPopulation(Integer value) {
         this.population = value;
     }
 
     /**
-     * »ñÈ¡capitalÊôĞÔµÄÖµ¡£
-     * 
+     * è·å–capitalå±æ€§çš„å€¼ã€‚
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCapital() {
         return capital;
     }
 
     /**
-     * ÉèÖÃcapitalÊôĞÔµÄÖµ¡£
-     * 
+     * è®¾ç½®capitalå±æ€§çš„å€¼ã€‚
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCapital(String value) {
         this.capital = value;
     }
 
     /**
-     * »ñÈ¡currencyÊôĞÔµÄÖµ¡£
-     * 
+     * è·å–currencyå±æ€§çš„å€¼ã€‚
+     *
      * @return
      *     possible object is
      *     {@link Currency }
-     *     
+     *
      */
     public Currency getCurrency() {
         return currency;
     }
 
     /**
-     * ÉèÖÃcurrencyÊôĞÔµÄÖµ¡£
-     * 
+     * è®¾ç½®currencyå±æ€§çš„å€¼ã€‚
+     *
      * @param value
      *     allowed object is
      *     {@link Currency }
-     *     
+     *
      */
     public void setCurrency(Currency value) {
         this.currency = value;
