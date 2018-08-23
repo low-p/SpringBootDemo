@@ -7,7 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-@MapperScan("com.zyj.springboot.demo.dao")
+@MapperScan(basePackages = "com.zyj.springboot.demo.dao")
 public class DemoApplication extends SpringBootServletInitializer {
 
     @Override
