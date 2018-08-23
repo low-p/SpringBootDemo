@@ -6,8 +6,6 @@ server:
     context-path: /demo
 
 spring:
-    profiles:
-        active: test
     datasource:
         #name: mysql_test
         type: com.alibaba.druid.pool.DruidDataSource

@@ -28,19 +28,22 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ExcelPOITest {
-    public static final Logger logger = LoggerFactory.getLogger(ExcelPOITest.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExcelPOITest.class);
     @Resource
     private IStudentInfoService studentInfoService;
 
     @Test
     public void exportStudentInfo() throws IOException {
         ResultPage page = studentInfoService.queryStudentList(1, 50, "");
-        List<StudentInfo> list = page.getRows();
+        List<StudentInfo> list = new ArrayList<>();
+        if (null != page) {
+            list = page.getRows();
+        }
         if (list.isEmpty()) throw new RuntimeException("未查询到学生信息");
         //HSSFWorkbook workbook = new HSSFWorkbook();
         XSSFWorkbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("学生信息表");
-        Row row = null;
+        Row row;
         row = sheet.createRow(0);
         row.setHeight((short) (26.25*20));
         row.createCell(0).setCellValue("学生信息列表");
@@ -69,7 +72,7 @@ public class ExcelPOITest {
             row.getCell(i).setCellStyle(ExcelUtils.getXSSFStyle(workbook, ExcelStyleType.COLUMN));
         }
 
-        StudentInfo info = null;
+        StudentInfo info;
         for (int i = 0; i < list.size(); i++) {
             row = sheet.createRow(i+2);
             info = list.get(i);

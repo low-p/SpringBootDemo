@@ -15,7 +15,8 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.3.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <properties>
@@ -205,8 +206,13 @@
                     <warName>demo</warName>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-
 </project>

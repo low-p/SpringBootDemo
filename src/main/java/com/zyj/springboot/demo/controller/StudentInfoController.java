@@ -48,8 +48,9 @@ public class StudentInfoController {
             //logger.info("参数>>>>>>>>>>>>>>>>>>>>>>>>"+JsonUtils.objectToJson(student));
             StudentInfo info = this.studentInfoService.insertStudent(student);
             //logger.info("返回值>>>>>>>>>>>>>>>>>>>>>>>>" + res);
-            if (null != info && null != info.getsId())
+            if (null != info && null != info.getsId()) {
                 result = "success";
+            }
         } catch (Exception e){
             e.printStackTrace();
             result = "failure";
@@ -72,8 +73,9 @@ public class StudentInfoController {
             //logger.info("修改参数>>>>>>>>>>>>>>>>>>>>>>>>"+JsonUtils.objectToJson(student));
             StudentInfo info = this.studentInfoService.editStudent(student);
             //logger.info("修改返回值>>>>>>>>>>>>>>>>>>>>>>>>" + res);
-            if (null != info)
+            if (null != info) {
                 result = "success";
+            }
         } catch (Exception e){
             e.printStackTrace();
             result = "failure";
@@ -113,8 +115,9 @@ public class StudentInfoController {
             //logger.info("删除参数>>>>>>>>>>>>>>>>>>>>>>>>"+ Arrays.toString(ids));
             int res = this.studentInfoService.batchDelStudent(ids);
             //logger.info("删除返回值>>>>>>>>>>>>>>>>>>>>>>>>" + res);
-            if (res > 0)
+            if (res > 0) {
                 result = "success";
+            }
         } catch (Exception e){
             e.printStackTrace();
             result = "failure";
