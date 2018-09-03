@@ -70,7 +70,7 @@ public class UserSessionFilter implements Filter {
             filterChain.doFilter(httpRequest, httpResponse);
             return;
         } else {
-            logger.info("访问URL>>>>>>>>>>>>>>>>>>>>>>>" + url);
+            //logger.info("访问URL>>>>>>>>>>>>>>>>>>>>>>>" + url);
             HttpSession session = httpRequest.getSession();
             User user = (User) session.getAttribute(LOGIN_SESSION);
             if (userSSOConfig.isRepeatLogin() && user != null) {
@@ -84,7 +84,7 @@ public class UserSessionFilter implements Filter {
                     httpResponse.sendRedirect("/demo/index");
                     return;
                 }
-                logger.info("session刷新成功");
+                //logger.info("session刷新成功");
                 filterChain.doFilter(httpRequest, httpResponse);
                 return;
             }
