@@ -5,7 +5,7 @@ $ cd [d]:/cd ../mkdir [file]
 1、执行以下命令，创建SSH KEY, 在C盘用户目录下的.ssh目录，生成id_rsa和id_rsa.pub这两个文件([email]--邮箱,一般为Github注册邮箱)      
 $ ssh-keygen -t rsa -C [email]     
 2、登录Github, 进入Settings，找到SSH and GPG keys, 然后New SSH key，Title任意命名，   
-   把步骤4中id_rsa.pub文件中的代码复制到Key下的文本框中，最后Add SSH key完成。
+   把步骤1中id_rsa.pub文件中的代码复制到Key下的文本框中，最后Add SSH key完成。
       
 #设置用户名以及用户邮箱([email]--邮箱; [name]--用户名)       
 //全局设置   
