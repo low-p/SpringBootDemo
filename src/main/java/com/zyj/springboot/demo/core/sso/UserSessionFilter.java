@@ -12,8 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +33,7 @@ import static com.zyj.springboot.demo.core.sso.SSOConstant.LOGIN_SESSION;
 
 @Component
 @ServletComponentScan
+@WebFilter
 public class UserSessionFilter implements Filter {
     public static final Logger logger = LoggerFactory.getLogger(UserSessionFilter.class);
 
@@ -35,13 +41,13 @@ public class UserSessionFilter implements Filter {
 
     private String[] prersonPassUrls;
 
-    @Resource
+    @Autowired
     private UserSSOConfig userSSOConfig;
 
     @Autowired
     private IUserService userService;
 
-    @Resource
+    @Autowired
     private MemCachedClient memCachedClient;
 
     /**

@@ -2,7 +2,6 @@ package com.zyj.springboot.demo.service.impl;
 
 import com.whalin.MemCached.MemCachedClient;
 import com.zyj.springboot.demo.core.config.UserSSOConfig;
-import com.zyj.springboot.demo.core.sso.SSOConstant;
 import com.zyj.springboot.demo.core.sso.SsoCookie;
 import com.zyj.springboot.demo.dao.IUserDao;
 import com.zyj.springboot.demo.entity.User;
@@ -13,7 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +23,7 @@ import java.util.Map;
 
 import static com.zyj.springboot.demo.core.sso.SSOConstant.LOGIN_SESSION;
 
-@Service
+@Service("userServiceImpl")
 public class UserServiceImpl implements IUserService {
     public static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Resource
@@ -34,6 +34,7 @@ public class UserServiceImpl implements IUserService {
     private MemCachedClient memCachedClient;
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public int insertUser(String username, String password, String nickname) {
         User user = this.initUserInfo(username, password, nickname);
         if (null != user) {

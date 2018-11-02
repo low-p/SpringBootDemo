@@ -11,6 +11,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +26,7 @@ public class StudentInfoServiceImpl implements IStudentInfoService {
     private IStudentInfoDao studentInfoDao;
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public synchronized StudentInfo insertStudent(StudentInfo student) {
         if (null != student) {
             this.checkStudentInfo(student);
@@ -71,6 +74,7 @@ public class StudentInfoServiceImpl implements IStudentInfoService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public synchronized StudentInfo editStudent(StudentInfo student) {
         if (null != student) {
             this.checkEditStident(student);
@@ -83,6 +87,7 @@ public class StudentInfoServiceImpl implements IStudentInfoService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public int batchDelStudent(int[] ids) {
         if (null != ids && ids.length > 0) {
             // 第一种实现：id“,”隔开字符串
