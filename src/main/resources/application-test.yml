@@ -38,7 +38,7 @@ spring:
         host: 127.0.0.1
         port: 6379
         # 连接超时时间（毫秒）
-        timeout: 1000ms
+        timeout: 5000
         password: 123456
         jedis:
           pool:
@@ -49,7 +49,7 @@ spring:
             # 连接池中的最大空闲连接
             max-idle: 8
             # 连接池最大阻塞等待时间（使用负值表示没有限制）
-            max-wait: -1ms
+            max-wait: -1
 
 #mybatis持久化层
 mybatis:

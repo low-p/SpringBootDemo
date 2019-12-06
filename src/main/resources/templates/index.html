@@ -2,11 +2,11 @@
 <html>
 <head>
     <title>SpringBoot-Demo-Login-Purple</title>
-    <link href="/demo/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="/demo/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <link rel="shortcut icon" href="/demo/ico/usericon.png">
-    <!-- -->
+    <!-- js引用 -->
     <script src="/demo/js/jquery.min.js"></script>
     <script src="/demo/webjars/popper.js/umd/popper.min.js"></script>
     <script src="/demo/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -23,13 +23,13 @@
         <form id="loginForm">
             <li>
                 <input type="text" class="text" id="username" name="username" value="用户名" data-toggle="tooltip" data-trigger="manual" data-placement="top" data-html="true"
-                       onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户名';}" data-title="<span class='msgspan'>请输入用户名</span>">
+                       onfocus="this.value = '';" onblur="if (this.value === '') {this.value = '用户名';}" data-title="<span class='msgspan'>请输入用户名</span>">
                 <a href="#" class=" icon user"></a>
             </li>
             <div class="clear"> </div>
             <li>
                 <input type="password" id="password" name="password" value="Password" data-toggle="tooltip" data-trigger="manual" data-placement="bottom" data-html="true"
-                       onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}" data-title="<span class='msgspan'>请输入用户密码</span>">
+                       onfocus="this.value = '';" onblur="if (this.value === '') {this.value = 'Password';}" data-title="<span class='msgspan'>请输入用户密码</span>">
                 <a href="#" class="icon lock"></a>
             </li>
             <div class="clear"> </div>

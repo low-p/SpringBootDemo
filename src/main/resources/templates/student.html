@@ -141,19 +141,19 @@
             url: "/demo/student/list", //获取数据的Servlet地址
             striped: true,  //表格显示条纹
             pagination: true, //启动分页
-            pageSize: 5,  //每页显示的记录数
+            pageSize: 10,  //每页显示的记录数
             pageNumber:1, //当前第几页
-            pageList: [5, 10, 15, 20, 25],  //记录数可选列表
+            pageList: [10, 15, 20, 50, 100],  //记录数可选列表
             search: true,  //是否启用查询
             searchOnEnterKey : true,
             //showRefresh : true,//刷新
-            //showToggle : true,//默认为false隐藏视图切换按钮，设为true显示
-            //showColumns: false,// 默认为false隐藏某列下拉菜单，设为true显示
+            //showToggle : true,//默认为false隐藏视图切换按钮, 设为true显示
+            //showColumns: false,// 默认为false隐藏某列下拉菜单, 设为true显示
             toolbar:"#toolbar",//工具栏
             locale: "zh-CN",
             uniqueId:"sId",//Indicate an unique identifier for each row
             sidePagination: "server", //表示服务端请求
-            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
             //设置为limit可以获取limit, offset, search, sort, order
             queryParamsType : "undefined",
             queryParams: function queryParams(params) {   //设置查询参数
@@ -206,7 +206,7 @@
     }
 
     $(document).ready(function () {
-        //调用函数，初始化表格
+        //调用函数, 初始化表格
         initTable();
 
         //当点击查询按钮的时候执行
@@ -230,7 +230,7 @@
             data:param,
             dataType:"json",
             success:function(data){
-                //console.log("返回数据： " + data);
+                //console.log("返回数据: " + data);
                 if(data.result=="success"){
                     $("#addStudentModal").modal('hide');
                     $("#studentList").bootstrapTable('refresh');
@@ -241,7 +241,7 @@
                         type: 'success'
                     })
                 } else {
-                    //console.log("新增失败： "+JSON.stringify(data));
+                    //console.log("新增失败: "+JSON.stringify(data));
                     $.globalMessenger().post({
                         message: "新增失败",
                         hideAfter: 2,
@@ -250,7 +250,7 @@
                 }
             },
             error:function(msg){
-                //console.log("新增错误："+ JSON.stringify(msg));
+                //console.log("新增错误: "+ JSON.stringify(msg));
                 $.globalMessenger().post({
                     message: "新增错误",
                     hideAfter: 2,
@@ -273,9 +273,9 @@
         }
         else{
             $("#editStudentModal").modal("toggle");
-            //console.log("执行toggle.。。。。。。。。。。。。。。。。。。。");
+            //console.log("执行toggle.......................");
             $("#editStudentModal").modal("show");
-            //console.log("执行show。。。。。。。。。。。。。。。。。。。。。。");
+            //console.log("执行show......................");
             var row = rows[0];
             $('#editId').val(row.sId);
             $('#editSName').val(row.sName);
@@ -302,7 +302,7 @@
                         type: 'success'
                     })
                 } else {
-                    //console.log("修改失败："+JSON.stringify(data));
+                    //console.log("修改失败: "+JSON.stringify(data));
                     $.globalMessenger().post({
                         message: "修改失败",
                         hideAfter: 2,
@@ -311,7 +311,7 @@
                 }
             },
             error:function(msg){
-                //console.log("修改错误："+ JSON.stringify(msg));
+                //console.log("修改错误: "+ JSON.stringify(msg));
                 $.globalMessenger().post({
                     message: "修改错误",
                     hideAfter: 2,
@@ -354,7 +354,7 @@
                         type: 'success'
                     })
                 } else {
-                    //console.log("删除失败："+JSON.stringify(data));
+                    //console.log("删除失败: "+JSON.stringify(data));
                     $.globalMessenger().post({
                         message: "删除失败",
                         hideAfter: 2,
@@ -363,7 +363,7 @@
                 }
             },
             error:function(msg){
-                //console.log("删除错误："+ JSON.stringify(msg));
+                //console.log("删除错误: "+ JSON.stringify(msg));
                 $.globalMessenger().post({
                     message: "删除错误",
                     hideAfter: 2,

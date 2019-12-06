@@ -10,16 +10,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.core.DefaultTypedTuple;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RedisCacheTest {
-    public static final Logger logger = LoggerFactory.getLogger(RedisCacheTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(RedisCacheTest.class);
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
@@ -132,5 +144,4 @@ public class RedisCacheTest {
         logger.info(">>>>>>>>>>>>>StudentList: " + JsonUtils.objectToJson(pageInfo));
 
     }
-
 }

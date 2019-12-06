@@ -96,6 +96,7 @@ public class UserServiceImpl implements IUserService {
         }
         String token = SsoUtils.getUUID();
         // 以cookie的token值为key, userId值为Value, 放入缓存   设置30分钟过期
+
         memCachedClient.set(token, userId, new Date(1000*60*30));
         // 以cookie的token值为key, userId值为Value, 放入缓存   设置30分钟过期
         memCachedClient.set(userId, token, new Date(1000*60*30));
