@@ -18,7 +18,6 @@
 package com.zyj.springboot.demo.core;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
@@ -29,6 +28,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisCommands;
 
+import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,8 +44,8 @@ import java.util.List;
 @Service
 public class RedisDistributedLock {
 
-    @Autowired
-    private RedisTemplate<Object, Object> redisTemplate;
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 释放锁的lua脚本
@@ -65,8 +65,9 @@ public class RedisDistributedLock {
 
     /**
      * 加锁
-     * @param key 。
-     * @param value 。
+     *
+     * @param key    。
+     * @param value  。
      * @param expire 。
      * @return boolean
      */
@@ -83,10 +84,11 @@ public class RedisDistributedLock {
 
     /**
      * 移除过期时间(即永久有效)
+     *
      * @param key 。
      * @return boolean
      */
-    public boolean persistKey(final String key){
+    public boolean persistKey(final String key) {
         Long result = redisTemplate.execute(new RedisCallback<Long>() {
             @Override
             public Long doInRedis(RedisConnection connection) throws DataAccessException {
@@ -98,8 +100,9 @@ public class RedisDistributedLock {
     }
 
     /**
-     *  释放锁
-     * @param key 。
+     * 释放锁
+     *
+     * @param key   。
      * @param value 。
      * @return boolean
      */
@@ -130,10 +133,11 @@ public class RedisDistributedLock {
 
     /**
      * 获取过期时间
+     *
      * @param key 。
      * @return Long
      */
-    public Long ttlKey(final String key){
+    public Long ttlKey(final String key) {
         Long result = redisTemplate.execute(new RedisCallback<Long>() {
             @Override
             public Long doInRedis(RedisConnection connection) throws DataAccessException {

@@ -3,7 +3,9 @@ package com.zyj.springboot.demo.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zyj.springboot.demo.core.ResultPage;
-import com.zyj.springboot.demo.core.cache.*;
+import com.zyj.springboot.demo.core.cache.CacheNameSpace;
+import com.zyj.springboot.demo.core.cache.QueryCache;
+import com.zyj.springboot.demo.core.cache.QueryCacheKey;
 import com.zyj.springboot.demo.dao.IStudentInfoDao;
 import com.zyj.springboot.demo.entity.StudentInfo;
 import com.zyj.springboot.demo.service.IStudentInfoService;
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,9 +60,9 @@ public class StudentInfoServiceImpl implements IStudentInfoService {
     }
 
     @Override
-    //@QueryCache(nameSpace = CacheNameSpace.STUDENT_QUERY)
-    //public ResultPage queryStudentList(@QueryCacheKey int pageNum, @QueryCacheKey int pageSize, @QueryCacheKey String keyword) {
-    public ResultPage queryStudentList(int pageNum, int pageSize, String keyword) {
+    @QueryCache(nameSpace = CacheNameSpace.STUDENT_QUERY)
+    public ResultPage queryStudentList(@QueryCacheKey int pageNum, @QueryCacheKey int pageSize, @QueryCacheKey String keyword) {
+        //public ResultPage queryStudentList(int pageNum, int pageSize, String keyword) {
         PageHelper.startPage(pageNum, pageSize);
         List<StudentInfo> list = studentInfoDao.queryForList(keyword);
         ResultPage result = new ResultPage(new PageInfo(list));
@@ -68,7 +71,7 @@ public class StudentInfoServiceImpl implements IStudentInfoService {
 
     @Override
     @QueryCache(nameSpace = CacheNameSpace.STUDENT_QUERY)
-    public StudentInfo findStudentById (@QueryCacheKey Integer id){
+    public StudentInfo findStudentById(@QueryCacheKey Integer id) {
         StudentInfo info = studentInfoDao.findById(id);
         return info;
     }
@@ -79,7 +82,7 @@ public class StudentInfoServiceImpl implements IStudentInfoService {
         if (null != student) {
             this.checkEditStident(student);
             int res = studentInfoDao.update(student);
-            if(res > 0) {
+            if (res > 0) {
                 return student;
             }
         }
@@ -104,7 +107,7 @@ public class StudentInfoServiceImpl implements IStudentInfoService {
             // 第二种实现：疯转集合
             List<Map> idList = new ArrayList<>();
             Map map = null;
-            for (int id: ids) {
+            for (int id : ids) {
                 map = new HashMap();
                 map.put("id", id);
                 idList.add(map);
@@ -118,6 +121,7 @@ public class StudentInfoServiceImpl implements IStudentInfoService {
 
     /**
      * 修改学生信息
+     *
      * @param student
      */
     private void checkEditStident(StudentInfo student) {

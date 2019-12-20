@@ -15,7 +15,7 @@
  * @since 0.0.1
  */
 
-package com.zyj.springboot.demo.test;
+package com.zyj.springboot.demo;
 
 import java.io.IOException;
 import java.nio.file.Files;

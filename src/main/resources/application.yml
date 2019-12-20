@@ -1,3 +1,10 @@
 spring:
     profiles:
-        active: test
+        active: dev
+
+server:
+  #服务端口
+  port: 8091
+  servlet:
+    #访问路径
+    context-path: /demo

@@ -1,4 +1,4 @@
-package com.zyj.springboot.demo.test;
+package com.zyj.springboot.demo;
 
 import com.zyj.springboot.demo.util.JsonUtils;
 import org.slf4j.Logger;

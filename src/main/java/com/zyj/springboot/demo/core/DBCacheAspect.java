@@ -1,6 +1,8 @@
 package com.zyj.springboot.demo.core;
 
-import com.zyj.springboot.demo.core.cache.*;
+import com.zyj.springboot.demo.core.cache.CacheNameSpace;
+import com.zyj.springboot.demo.core.cache.QueryCache;
+import com.zyj.springboot.demo.core.cache.QueryCacheKey;
 import com.zyj.springboot.demo.util.JsonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,22 +28,24 @@ import java.util.concurrent.TimeUnit;
 public class DBCacheAspect {
     public static final Logger logger = LoggerFactory.getLogger(DBCacheAspect.class);
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 定义拦截规则，拦截所有@QueryCache注解方法(切入点)
      */
     @Pointcut("@annotation(com.zyj.springboot.demo.core.cache.QueryCache)")
-    public void queryCachePointcut(){}
+    public void queryCachePointcut() {
+    }
 
     /**
      * 查询缓存拦截器逻辑实现
-     * @param pjp  用于环绕通知，使用proceed()方法来执行目标方法
+     *
+     * @param pjp 用于环绕通知，使用proceed()方法来执行目标方法
      * @return
      * @throws Throwable
      */
     @Around("queryCachePointcut()")
-    public Object queryCacheInterceptor(ProceedingJoinPoint pjp) throws Throwable{
+    public Object queryCacheInterceptor(ProceedingJoinPoint pjp) throws Throwable {
         Long startTime = System.currentTimeMillis();
         logger.info(">>>>>>Query--AOP--查询缓存切面--START>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         MethodSignature signature = (MethodSignature) pjp.getSignature();
@@ -69,8 +73,7 @@ public class DBCacheAspect {
         if (StringUtils.isBlank(key)) throw new RuntimeException("Query--缓存key值不存在");
         logger.info(">>>>>>Query--获取到缓存中key值>>>>>>" + key);
         ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
-        boolean hasKey = redisTemplate.hasKey(key);
-        if (hasKey) {
+        if (redisTemplate.hasKey(key)) {
             // 从缓存中获取数据返回
             Object object = valueOperations.get(key);
             logger.info(">>>>>>Query--缓存获取数据>>>>>>" + JsonUtils.objectToJson(object));

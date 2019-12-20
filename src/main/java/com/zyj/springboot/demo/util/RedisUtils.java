@@ -41,9 +41,10 @@ public class RedisUtils {
 
     /**
      * 尝试获取分布式锁
-     * @param jedis 客户端。
-     * @param lockKey 锁。
-     * @param lockValue 请求标识。
+     *
+     * @param jedis      客户端。
+     * @param lockKey    锁。
+     * @param lockValue  请求标识。
      * @param expireTime 超期时间。
      * @return boolean 是否获取成功
      */
@@ -59,20 +60,22 @@ public class RedisUtils {
 
     /**
      * 移除key的过期时间
+     *
      * @param jedis 客户端。
-     * @param key 。
+     * @param key   。
      * @return boolean
      */
-    public static boolean persistKey(final Jedis jedis, final String key){
+    public static boolean persistKey(final Jedis jedis, final String key) {
         Long result = jedis.persist(key);
         logger.info("Jedis移除过期时间结果>>>>>>>{}", result);
-        return null!=result&&result>PERSIST_CONDITION;
+        return null != result && result > PERSIST_CONDITION;
     }
 
     /**
      * 释放分布式锁
-     * @param jedis 客户端。
-     * @param lockKey 锁。
+     *
+     * @param jedis     客户端。
+     * @param lockKey   锁。
      * @param lockValue 请求标识。
      * @return boolean 是否释放成功
      */
@@ -89,13 +92,14 @@ public class RedisUtils {
 
     /**
      * 获取key的过期时间
+     *
      * @param jedis 客户端。
-     * @param key 。
+     * @param key   。
      * @return boolean
      */
-    public static boolean ttlKey(final Jedis jedis, final String key){
+    public static boolean ttlKey(final Jedis jedis, final String key) {
         Long result = jedis.ttl(key);
         logger.info("Jedis获取过期时间结果>>>>>>>{}", result);
-        return null!=result&&result>PERSIST_CONDITION;
+        return null != result && result > PERSIST_CONDITION;
     }
 }
